@@ -1,0 +1,12 @@
+
+<!-- this page confimrs the removal of a participant from a trip -->
+<p style="color: green"><%= notice %></p>
+
+<%= render @participant %>
+
+<p>"Are you sure you want to remove this participant from the trip?"</p>
+
+<div>
+<%= link_to "Back to participants", trip_participants_path(@trip) %>
+<%= button_to "Remove this participant", trip_participant_path(@trip, @participant), method: :delete, data: { confirm: "Are you sure?" } %>
+</div>

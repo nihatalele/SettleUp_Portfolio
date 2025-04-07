@@ -1,0 +1,20 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Participants" %>
+
+
+<!-- This page removes participants from a trip -->
+<h1>Remove Participants</h1>
+<p>Select a participant to remove:</p>
+
+<div id="participants">
+  <% @trip.participants.each do |participant| %>
+    <%= render participant %>
+    <p>
+    <%= link_to "Remove", trip_participant_path(@trip, participant), method: :delete, data: { confirm: "Are you sure?" } %>
+
+    </p>
+  <% end %>
+
+  <%= link_to "Back to edit trip", edit_trip_path(@trip) %>
+</div>

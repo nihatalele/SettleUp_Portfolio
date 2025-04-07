@@ -3,6 +3,14 @@
 <%= render @trip %>
 
 <div>
+
+<h2>Participants</h2>
+<ul>
+  <% @trip.participants.each do |participant| %>
+    <li><%= participant.name %></li>
+  <% end %>
+</ul>
+
   <%= link_to "Edit this trip", edit_trip_path(@trip) %> |
   <%= link_to "Back to trips", trips_path %>
 
