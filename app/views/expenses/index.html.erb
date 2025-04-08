@@ -1,3 +1,5 @@
+<p style="color: green"><%= notice %></p>
+
 <% content_for :title, "Expenses" %>
 
 <h1>Expenses for <%= @participant.name %></h1>
@@ -8,9 +10,7 @@
       <li>
         <%= expense.description %> - $<%= '%.2f' % expense.amount %>
         <br>
-        <%= link_to "View", trip_participant_expense_path(@trip, @participant, expense) %> |
-        <%= link_to "Edit", edit_trip_participant_expense_path(@trip, @participant, expense) %> |
-        <%= link_to "Delete", trip_participant_expense_path(@trip, @participant, expense), method: :delete, data: { confirm: "Are you sure?" } %>
+        <%= link_to "View details", trip_participant_expense_path(@trip, @participant, expense) %>
       </li>
     <% end %>
   </ul>
@@ -18,5 +18,5 @@
   <p>No expenses recorded.</p>
 <% end %>
 
-<%= link_to "Add New Expense", new_trip_participant_expense_path(@trip, @participant) %>
+<%= link_to "Add New Expense", new_trip_participant_expense_path(@trip, @participant) %> |
 <%= link_to "Back to trip", trip_path(@trip) %>

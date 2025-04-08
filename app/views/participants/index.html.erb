@@ -9,10 +9,9 @@
 
 <div id="participants">
   <% @trip.participants.each do |participant| %>
-    <%= render participant %>
+    <%= participant.name %>
     <p>
     <%= link_to "Remove", trip_participant_path(@trip, participant), method: :delete, data: { confirm: "Are you sure?" } %>
-
     </p>
   <% end %>
 

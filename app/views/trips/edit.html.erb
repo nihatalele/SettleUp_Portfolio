@@ -13,16 +13,14 @@
     <% @trip.participants.each do |participant| %>
       <li>
         <%= participant.name %>
-        |
-        <%= link_to "View Expenses", trip_participant_expenses_path(@trip, participant) %>
-        |
-        <%= link_to "Add Expense", new_trip_participant_expense_path(@trip, participant) %>
+        
       </li>
     <% end %>
   </ul>
 
   <%= link_to "Add a participant", new_trip_participant_path(@trip) %> |
-  <%= link_to "Remove a participant", trip_participants_path(@trip), method: :delete %> |
-  <%= link_to "Show this trip", @trip %> |
-  <%= link_to "Back to trips", trips_path %>
+  <%= link_to "Remove a participant", trip_participants_path(@trip), method: :delete %>
+  <br>
+  <br>
+  <%= link_to "Back to trip details", @trip %>
 </div>

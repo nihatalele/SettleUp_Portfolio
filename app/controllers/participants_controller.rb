@@ -38,6 +38,12 @@ class ParticipantsController < ApplicationController
   def destroy
     @trip = Trip.find(params[:trip_id])
     @participant = @trip.participants.find(params[:id])
+    @participant.expenses.each do |expense|
+      expense.shared_participants.each do |shared_participant|
+        expense.shared_participants.delete(shared_participant)
+      end
+      expense.destroy
+    end
     @participant.destroy
     redirect_to trip_path(@trip), notice: "Participant was successfully removed."
   end

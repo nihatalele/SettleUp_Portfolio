@@ -49,10 +49,20 @@ class TripsController < ApplicationController
 
   # DELETE /trips/1 or /trips/1.json
   def destroy
-    @trip.destroy!
-
+    @trip = Trip.find(params[:id])
+    @trip.participants.each do |participant|
+      participant.expenses.each do |expense|
+        expense.shared_participants.each do |shared_participant|
+          expense.shared_participants.delete(shared_participant)
+        end
+        expense.destroy
+      end
+    end
+    @trip.participants.destroy_all
+    @trip.expenses.destroy_all
+    @trip.destroy
     respond_to do |format|
-      format.html { redirect_to trips_path, status: :see_other, notice: "Trip was successfully destroyed." }
+      format.html { redirect_to trips_url, notice: "Trip was successfully destroyed." }
       format.json { head :no_content }
     end
   end

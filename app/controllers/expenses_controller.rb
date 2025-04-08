@@ -24,15 +24,18 @@ class ExpensesController < ApplicationController
 
   def update
     if @expense.update(expense_params)
-      redirect_to trip_path(@participant.trip), notice: "Expense updated."
+      redirect_to trip_participant_expenses_path(@trip, @participant), notice: "Expense updated."
     else
       render :edit
     end
   end
 
   def destroy
+    @expense.shared_participants.each do |shared_participant|
+      @expense.shared_participants.delete(shared_participant)
+    end
     @expense.destroy
-    redirect_to trip_path(@participant.trip), notice: "Expense deleted."
+    redirect_to trip_participant_expense_path(@trip, @participant), notice: "Expense deleted."
   end
 
   private
