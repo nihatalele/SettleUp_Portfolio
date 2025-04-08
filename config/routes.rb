@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root "trips#index"
   resources :trips do
-    resources :participants
+    resources :participants do
+      resources :expenses
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

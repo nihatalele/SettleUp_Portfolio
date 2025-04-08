@@ -1,0 +1,9 @@
+<% content_for :title, "New Expense" %>
+
+<h1>New Expense</h1>
+
+<%= render "form", expense: @expense %>
+
+<br>
+
+<%= link_to "Back to participant", trip_participant_path(@trip, @participant) %>

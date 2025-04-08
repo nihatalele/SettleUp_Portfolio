@@ -1,0 +1,39 @@
+<%= form_with(model: [@trip, @participant, @expense]) do |form| %>
+  <% if @expense.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@expense.errors.count, "error") %> prohibited this expense from being saved:</h2>
+      <ul>
+        <% @expense.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Hidden participant_id field -->
+  <%= form.hidden_field :participant_id, value: @participant.id %>
+
+  <div>
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div>
+    <%= form.label :amount %>
+    <%= form.number_field :amount, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= form.label :date %>
+    <%= form.date_select :date %>
+  </div>
+
+  <div>
+    <%= form.label :shared_participant_ids, "Shared With" %>
+    <%= form.collection_check_boxes :shared_participant_ids, @trip.participants, :id, :name %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

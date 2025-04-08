@@ -10,7 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_07_131754) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_07_232628) do
+  create_table "expense_shares", force: :cascade do |t|
+    t.integer "expense_id", null: false
+    t.integer "participant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["expense_id"], name: "index_expense_shares_on_expense_id"
+    t.index ["participant_id"], name: "index_expense_shares_on_participant_id"
+  end
+
+  create_table "expenses", force: :cascade do |t|
+    t.string "description"
+    t.decimal "amount"
+    t.date "date"
+    t.integer "participant_id", null: false
+    t.integer "trip_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["participant_id"], name: "index_expenses_on_participant_id"
+    t.index ["trip_id"], name: "index_expenses_on_trip_id"
+  end
+
   create_table "participants", force: :cascade do |t|
     t.string "name"
     t.integer "trip_id", null: false
@@ -27,5 +48,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_131754) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "expense_shares", "expenses"
+  add_foreign_key "expense_shares", "participants"
+  add_foreign_key "expenses", "participants"
+  add_foreign_key "expenses", "trips"
   add_foreign_key "participants", "trips"
 end
