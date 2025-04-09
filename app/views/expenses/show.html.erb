@@ -8,6 +8,21 @@
 
 <br>
 
+<% if @expense.expense_shares.any? %>
+  <h2>Amounts Owed:</h2>
+  <ul>
+    <% @expense.expense_shares.each do |share| %>
+      <li>
+        <%= share.participant.name %> owes: $<%= '%.2f' % share.amount_owed %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No expense shares recorded for this expense.</p>
+<% end %>
+
+<br>
+
 <%= link_to "Edit", edit_trip_participant_expense_path(@trip, @participant, @expense) %> |
 <%= link_to "Delete", trip_participant_expense_path(@trip, @participant, @expense), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %> |
 <%= link_to "Back to participant's expenses", trip_participant_expenses_path(@trip, @participant) %>

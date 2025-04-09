@@ -1,14 +1,21 @@
+<h1><%= @participant.name %> - Trip Summary</h1>
 
-<!-- this page confimrs the removal of a participant from a trip -->
-<p style="color: green"><%= notice %></p>
+<p><strong>Trip:</strong> <%= @trip.name %></p>
 
-<h1>Confirm Participant Removal</h1>
-<p>Are you sure you want to remove 
-<%= @participant.name %>
-from the trip <%= @trip.name %>?</p>
+<p><strong>Total Spent:</strong> $<%= '%.2f' % @total_spent %></p>
+<p><strong>Total Owed to <%= @participant.name %>:</strong> $<%= '%.2f' % @total_owed %></p>
 
-<div>
-<%= button_to "Remove this participant", trip_participant_path(@trip, @participant), method: :delete, data: { confirm: "Are you sure?" } %>
+<% if @owes_to_each.any? %>
+  <h2>Amounts Owed to Others:</h2>
+  <ul>
+    <% @owes_to_each.each do |name, amount| %>
+      <li><%= @participant.name %> owes <%= name %>: $<%= '%.2f' % amount %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p><%= @participant.name %> owes nothing to others.</p>
+<% end %>
+
 <br>
-<%= link_to "Go back", trip_participants_path(@trip) %>
-</div>
+
+<%= link_to "Back to Trip", trip_path(@trip) %>
