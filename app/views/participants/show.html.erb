@@ -3,7 +3,7 @@
 <p><strong>Trip:</strong> <%= @trip.name %></p>
 
 <p><strong>Total Spent:</strong> $<%= '%.2f' % @total_spent %></p>
-<p><strong>Total Owed to <%= @participant.name %>:</strong> $<%= '%.2f' % @total_owed %></p>
+<p><strong>Total Owed To Others: </strong> $<%= '%.2f' % @total_owed %></p>
 
 <% if @owes_to_each.any? %>
   <h2>Amounts Owed to Others:</h2>
