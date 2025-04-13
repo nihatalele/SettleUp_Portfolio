@@ -14,7 +14,7 @@
   <ul>
     <% @expense.expense_shares.each do |share| %>
       <li>
-        <%= share.participant.name %> owes: $<%= '%.2f' % share.amount_owed %>
+        <%= share.participant.name %> owes: $<%= '%.2f' % (share.amount_owed || 0.0) %>
       </li>
     <% end %>
   </ul>
