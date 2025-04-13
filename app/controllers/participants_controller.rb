@@ -8,6 +8,9 @@ class ParticipantsController < ApplicationController
   def show
     @trip = Trip.find(params[:trip_id])
     @participant = @trip.participants.find(params[:id])
+    @total_spent = @participant.total_spent
+    @total_owed = @participant.total_owed
+    @owes_to_each = @participant.owes_to_each
   end
 
   def edit
