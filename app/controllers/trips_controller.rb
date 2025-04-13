@@ -34,6 +34,11 @@ class TripsController < ApplicationController
     end
   end
 
+  def show
+    @trip = Trip.find(params[:id])
+    @participants = @trip.participants
+  end
+
   # PATCH/PUT /trips/1 or /trips/1.json
   def update
     respond_to do |format|
