@@ -10,7 +10,7 @@ class ExpensesController < ApplicationController
   def create
     @expense = @participant.expenses.build(expense_params)
     @expense.trip = @trip
-  
+
     if @expense.save
       # Call the calculate_shares method to distribute the expense among participants.
       @expense.calculate_shares
@@ -18,7 +18,7 @@ class ExpensesController < ApplicationController
     else
       render :new
     end
-  end  
+  end
 
   def edit
     @trip = @expense.trip
@@ -58,5 +58,5 @@ class ExpensesController < ApplicationController
 
   def expense_params
     params.require(:expense).permit(:description, :amount, :date, :category, :participant_id, shared_participant_ids: [])
-  end  
+  end
 end

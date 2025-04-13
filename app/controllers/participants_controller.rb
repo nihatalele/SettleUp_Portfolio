@@ -19,7 +19,7 @@ class ParticipantsController < ApplicationController
   def create
     @participant = @trip.participants.build(participant_params)
     if @participant.save
-      redirect_to edit_trip_path(@trip), notice: 'Participant was successfully created.'
+      redirect_to edit_trip_path(@trip), notice: "Participant was successfully created."
     else
       render :new
     end
