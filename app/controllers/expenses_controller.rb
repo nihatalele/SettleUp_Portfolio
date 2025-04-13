@@ -57,6 +57,6 @@ class ExpensesController < ApplicationController
   end
 
   def expense_params
-    params.require(:expense).permit(:description, :amount, :date, :category, shared_participant_ids: [])
+    params.require(:expense).permit(:description, :amount, :date, :category, :participant_id, shared_participant_ids: [])
   end  
 end
