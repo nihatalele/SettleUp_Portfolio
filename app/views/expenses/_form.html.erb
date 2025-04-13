@@ -29,9 +29,10 @@
   </div>
 
   <div>
-  <%= form.label :category %>
-  <%= form.select :category, Expense::CATEGORIES.map { |k, v| [k.to_s.titleize, v] } %>
+    <%= form.label :category %>
+    <%= form.select :category, Expense::CATEGORIES.map { |k, v| [k.to_s.titleize, v] }, { prompt: 'Select a category' } %>
   </div>
+
 
   <div>
     <%= form.label :shared_participant_ids, "Shared With" %>
