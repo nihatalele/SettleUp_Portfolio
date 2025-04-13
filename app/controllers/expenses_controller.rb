@@ -12,6 +12,8 @@ class ExpensesController < ApplicationController
     @expense.trip = @trip
   
     if @expense.save
+      # Call the calculate_shares method to distribute the expense among participants.
+      @expense.calculate_shares
       redirect_to trip_participant_expenses_path(@trip, @participant), notice: "Expense added."
     else
       render :new
@@ -24,6 +26,8 @@ class ExpensesController < ApplicationController
 
   def update
     if @expense.update(expense_params)
+      # Call the calculate_shares method to redistribute the expense among participants.
+      @expense.calculate_shares
       redirect_to trip_participant_expenses_path(@trip, @participant), notice: "Expense updated."
     else
       render :edit
