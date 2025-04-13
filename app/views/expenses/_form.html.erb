@@ -29,6 +29,11 @@
   </div>
 
   <div>
+  <%= form.label :category %>
+  <%= form.select :category, Expense::CATEGORIES.map { |k, v| [k.to_s.titleize, v] } %>
+  </div>
+
+  <div>
     <%= form.label :shared_participant_ids, "Shared With" %>
     <%= form.collection_check_boxes :shared_participant_ids, @trip.participants, :id, :name %>
   </div>

@@ -1,5 +1,6 @@
 <h1>Expense Details</h1>
 
+<p><strong>Category:</strong> <%= @expense.category_name.to_s.titleize %></p>
 <p><strong>Description:</strong> <%= @expense.description %></p>
 <p><strong>Amount:</strong> $<%= '%.2f' % @expense.amount %></p>
 <p><strong>Date:</strong> <%= @expense.date.strftime("%B %d, %Y") %></p>

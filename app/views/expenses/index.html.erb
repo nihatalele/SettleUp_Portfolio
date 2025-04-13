@@ -8,7 +8,7 @@
   <ul>
     <% @participant.expenses.each do |expense| %>
       <li>
-        <%= expense.description %> - $<%= '%.2f' % expense.amount %>
+        <%= expense.description %> - $<%= '%.2f' % expense.amount %> (<%= expense.category.titleize %>)
         <br>
         <%= link_to "View details", trip_participant_expense_path(@trip, @participant, expense) %>
       </li>
