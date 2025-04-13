@@ -33,4 +33,34 @@ class Participant < ApplicationRecord
     end
     owes
   end
+
+    # Calculate the net balance owed between this participant and another.
+  def net_balance(other_participant)
+    owed_to_other = ExpenseShare.joins(:expense)
+                               .where(expenses: { trip: trip })
+                               .where(participant: self, expenses: { participant: other_participant })
+                               .sum(:amount_owed)
+
+    owed_by_other = ExpenseShare.joins(:expense)
+                               .where(expenses: { trip: trip })
+                               .where(participant: other_participant, expenses: { participant: self })
+                               .sum(:amount_owed)
+
+    owed_to_other - owed_by_other
+  end
+
+  # Calculate the net balance owed between this participant and another.
+  def net_balance(other_participant)
+    owed_to_other = ExpenseShare.joins(:expense)
+                               .where(expenses: { trip: trip })
+                               .where(participant: self, expenses: { participant: other_participant })
+                               .sum(:amount_owed)
+
+    owed_by_other = ExpenseShare.joins(:expense)
+                               .where(expenses: { trip: trip })
+                               .where(participant: other_participant, expenses: { participant: self })
+                               .sum(:amount_owed)
+
+    owed_to_other - owed_by_other
+  end
 end

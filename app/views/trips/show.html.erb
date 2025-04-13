@@ -16,6 +16,48 @@
     <% end %>
   </ul>
 
+  <h2>Settle Up!</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th></th> <%# Empty header for participant names %>
+        <% @trip.participants.each do |participant| %>
+          <th><%= participant.name %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @trip.participants.each do |payer| %>
+        <tr>
+          <th><%= payer.name %></th>
+          <% @trip.participants.each do |receiver| %>
+            <% if payer == receiver %>
+              <td>-</td> <%# Don't show balance for same participant %>
+            <% else %>
+              <% balance = payer.net_balance(receiver) %>
+              <td>
+                <% if balance > 0 %>
+                  <%= payer.name %> owes <%= receiver.name %>: $<%= '%.2f' % balance %>
+                <% elsif balance < 0 %>
+                  <%# Only show message in the payer's column %>
+                  <% if payer == receiver %>
+                    <%= receiver.name %> owes <%= payer.name %>: $<%= '%.2f' % balance.abs %>
+                  <% else %>
+                    - <%# Add "-" when the payer is not the receiver, and balance is negative %>
+                  <% end %>
+                <% else %>
+                  - <%# No balance %>
+                <% end %>
+              </td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+
   <%= link_to "Edit this trip", edit_trip_path(@trip) %> |
   <%= link_to "Back to trips", trips_path %>
 
