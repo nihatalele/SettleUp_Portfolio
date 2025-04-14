@@ -1,6 +1,3 @@
-<head>
-<%= stylesheet_link_tag "custom", "data-turbo-track": "reload" %>
-<head>
 
 <%= form_with(model: [@trip, @participant, @expense]) do |form| %>
   <% if @expense.errors.any? %>
