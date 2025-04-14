@@ -1,3 +1,7 @@
+<head>
+<%= stylesheet_link_tag "custom", "data-turbo-track": "reload" %>
+<head>
+
 <%= form_with(model: [@trip, @participant]) do |form| %>
   <% if participant.errors.any? %>
     <div style="color: red">

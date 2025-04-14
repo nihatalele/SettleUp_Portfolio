@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_13_211428) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_13_205540) do
   create_table "expense_shares", force: :cascade do |t|
     t.integer "expense_id", null: false
     t.integer "participant_id", null: false
@@ -40,12 +40,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_13_211428) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["trip_id"], name: "index_participants_on_trip_id"
-  end
-
-  create_table "test_enums", force: :cascade do |t|
-    t.integer "thing"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "trips", force: :cascade do |t|

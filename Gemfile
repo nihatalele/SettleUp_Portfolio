@@ -20,6 +20,7 @@ gem "jbuilder"
 
 gem "sassc-rails"
 gem "sprockets-rails"
+gem "bootstrap-sass"
 
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
