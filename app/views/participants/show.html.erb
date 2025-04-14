@@ -1,6 +1,7 @@
 
 <h1><%= @participant.name %> - Trip Summary</h1>
 
+<div>
 <p><strong>Trip:</strong> <%= @trip.name %></p>
 
 <p><strong>Total Spent:</strong> $<%= '%.2f' % @total_spent %></p>
@@ -16,7 +17,7 @@
 <% else %>
   <p><%= @participant.name %> owes nothing to others.</p>
 <% end %>
-
+</div>
 <br>
 
-<%= link_to "Back to Trip", trip_path(@trip) %>
+<%= link_to "Back to Trip", trip_path(@trip), class: "btn btn-primary"%>
