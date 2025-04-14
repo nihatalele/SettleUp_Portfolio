@@ -13,7 +13,7 @@
     <%= participant.name %>
     <%= link_to "View Summary", trip_participant_path(@trip, participant) %> |
     <p>
-    <%= link_to "Remove", trip_participant_path(@trip, participant), method: :delete, data: { confirm: "Are you sure?" } %>
+    <%= button_to "Remove", trip_participant_path(@trip, participant), method: :delete, data: { confirm: "Are you sure?" } %>
     </p>
   <% end %>
 

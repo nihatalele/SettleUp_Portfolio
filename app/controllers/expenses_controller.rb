@@ -53,7 +53,16 @@ class ExpensesController < ApplicationController
   end
 
   def set_expense
-    @expense = @participant.expenses.find(params[:id])
+    # Find the expense using the participant's expenses association
+    # This ensures that the expense belongs to the correct participant.
+    # This is important for security reasons, as we don't want to expose expenses
+    # that don't belong to the participant.
+
+    # @expense = Expense.find(params[:id])
+    # @expense = @trip.expenses.find(params[:id])
+    # @expense = @trip.expenses.find_by(id: params[:id], participant_id: @participant.id)
+    # @expense = @trip.expenses.find_by(id: params[:id], participant_id: @participant.id)
+    @expense = @participant.expenses.find_by(params[:id])
   end
 
   def expense_params

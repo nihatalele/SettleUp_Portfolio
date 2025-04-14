@@ -35,7 +35,7 @@ class TripsController < ApplicationController
   end
 
   def show
-    @trip = Trip.find(params[:id])
+    @trip = Trip.find_by(params[:id])
     @participants = @trip.participants
   end
 
@@ -75,7 +75,7 @@ class TripsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trip
-      @trip = Trip.find(params.expect(:id))
+      @trip = Trip.find_by(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.
