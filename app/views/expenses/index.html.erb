@@ -6,6 +6,7 @@
 
 <h1>Expenses for <%= @participant.name %></h1>
 
+<div>
 <% if @participant.expenses.any? %>
   <ul>
     <% @participant.expenses.each do |expense| %>
@@ -19,6 +20,7 @@
 <% else %>
   <p>No expenses recorded.</p>
 <% end %>
+</div>
 
-<%= link_to "Add New Expense", new_trip_participant_expense_path(@trip, @participant) %> |
-<%= link_to "Back to trip", trip_path(@trip) %>
+<%= link_to "Add New Expense", new_trip_participant_expense_path(@trip, @participant), class: "btn btn-primary" %>
+<%= link_to "Back to trip details", trip_path(@trip), class: "btn btn-primary" %>

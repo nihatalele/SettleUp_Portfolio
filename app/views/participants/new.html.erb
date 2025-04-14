@@ -5,8 +5,5 @@
 
 <%= render "form", participant: @participant %>
 
-<br>
 
-<div>
-  <%= link_to "Back to edit trip", edit_trip_path(@trip) %>
-</div>
+<%= link_to "Back to edit trip", edit_trip_path(@trip), class: "btn btn-primary" %>

@@ -22,9 +22,8 @@
     <% end %>
   </ul>
 
-  <%= link_to "Add a participant", new_trip_participant_path(@trip) %> |
-  <%= link_to "Remove a participant", trip_participants_path(@trip), method: :delete %>
-  <br>
-  <br>
-  <%= link_to "Back to trip details", @trip %>
+  <%= link_to "Add a participant", new_trip_participant_path(@trip), class: "btn btn-primary" %>
+  <%= link_to "Remove a participant", trip_participants_path(@trip), method: :delete, class: "btn btn-danger" %>
+  
 </div>
+  <%= link_to "Back to trip details", @trip, class: "btn btn-primary" %>
