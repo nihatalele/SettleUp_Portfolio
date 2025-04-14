@@ -4,7 +4,7 @@
 <h1>Trip Details</h1>
 
 <div>
-<%= render @trip %>
+  <%= render partial: "trips/trip", locals: { trip: @trip } %>
 </div>
 
 <div>

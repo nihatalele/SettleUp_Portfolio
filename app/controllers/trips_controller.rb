@@ -6,10 +6,8 @@ class TripsController < ApplicationController
     @trips = Trip.all
   end
 
-  # GET /trips/1 or /trips/1.json
-  def show
-  end
-
+  
+  
   # GET /trips/new
   def new
     @trip = Trip.new
@@ -35,7 +33,7 @@ class TripsController < ApplicationController
   end
 
   def show
-    @trip = Trip.find_by(params[:id])
+    @trip = Trip.find(params[:id])
     @participants = @trip.participants
   end
 
