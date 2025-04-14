@@ -48,7 +48,7 @@ class ParticipantsController < ApplicationController
       expense.destroy
     end
     @participant.destroy
-    redirect_to trip_path(@trip), notice: "Participant was successfully removed."
+    redirect_to edit_trip_path(@trip), notice: "Participant was successfully removed."
   end
 
 
