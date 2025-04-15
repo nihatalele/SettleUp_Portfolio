@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_13_205540) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_15_154551) do
   create_table "expense_shares", force: :cascade do |t|
     t.integer "expense_id", null: false
     t.integer "participant_id", null: false
@@ -30,6 +30,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_13_205540) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "category"
+    t.string "currency"
     t.index ["participant_id"], name: "index_expenses_on_participant_id"
     t.index ["trip_id"], name: "index_expenses_on_trip_id"
   end
@@ -48,6 +49,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_13_205540) do
     t.date "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "currency"
   end
 
   add_foreign_key "expense_shares", "expenses"

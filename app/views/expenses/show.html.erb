@@ -1,7 +1,7 @@
 
 
 <h1>Expense Details</h1>
-
+<div>
 <p><strong>Category:</strong> <%= @expense.category_name.to_s.titleize %></p>
 <p><strong>Description:</strong> <%= @expense.description %></p>
 <p><strong>Amount:</strong> $<%= '%.2f' % @expense.amount %></p>
@@ -23,9 +23,11 @@
 <% else %>
   <p>No expense shares recorded for this expense.</p>
 <% end %>
+</div>
 
+<%= link_to "Edit the expense", edit_trip_participant_expense_path(@trip, @participant, @expense), class: "btn btn-primary" %>
 <br>
-
-<%= link_to "Edit", edit_trip_participant_expense_path(@trip, @participant, @expense), class: "btn btn-primary" %>
-<%= button_to "Delete", trip_participant_expense_path(@trip, @participant, @expense), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+<br>
 <%= link_to "Back to participant's expenses", trip_participant_expenses_path(@trip, @participant), class: "btn btn-primary" %>
+<hr>
+<%= button_to "Delete", trip_participant_expense_path(@trip, @participant, @expense), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>

@@ -9,7 +9,7 @@
     <ul>
       <% @participant.expenses.each do |expense| %>
         <li>
-          <%= expense.description %> –
+          <%= expense.description %> - 
           <% if expense.currency.present? && @trip.currency.present? %>
             <%= number_to_currency(expense.amount, unit: currency_symbol(expense.currency)) %>
             (≈ <%= number_to_currency(convert_to_trip_currency(expense), unit: currency_symbol(@trip.currency)) 

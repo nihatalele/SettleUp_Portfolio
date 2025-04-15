@@ -18,7 +18,9 @@ currency_symbol(@trip.currency)) %>
   <% else %>
     <p style="color: red;">Trip currency not set.</p>
   <% end %>
+</div>
 
+<div>
   <h2>Participants</h2>
   <h3>Expenses by Participant (in <%= currency_symbol(@trip.currency) || "?" %>)</h3>
 
@@ -32,13 +34,13 @@ currency_symbol(@trip.currency)) %>
   <% else %>
     <p style="color: red;">Trip currency is missing. Please set a currency for this trip.</p>
   <% end %>
-
+  <hr>
   <ul>
     <% @trip.participants.each do |participant| %>
       <li>
         <%= participant.name %>
-        <%= link_to "View Summary", trip_participant_path(@trip, participant), class: "btn btn-secondary" %>
-        <%= link_to "View Expenses", trip_participant_expenses_path(@trip, participant), class: "btn btn-secondary" 
+        <%= link_to "View summary", trip_participant_path(@trip, participant), class: "btn btn-secondary" %>
+        <%= link_to "View expenses", trip_participant_expenses_path(@trip, participant), class: "btn btn-secondary" 
 %>
       </li>
     <% end %>
@@ -49,6 +51,8 @@ currency_symbol(@trip.currency)) %>
   <% if @trip.currency.present? %>
     <h2>Settle Up!</h2>
 
+    <p>Here are the amounts each participant owes to each other</p>
+    <p>Rows represent the payer, and columns represent the receiver</p>
     <table>
       <thead>
         <tr>
@@ -98,4 +102,3 @@ currency_symbol(@trip.currency)) %>
 <hr>
 <%= button_to "Delete this trip", trip_path(@trip), method: :delete, data: { confirm: "Are you sure?" }, class: 
 "btn btn-danger" %>
-
