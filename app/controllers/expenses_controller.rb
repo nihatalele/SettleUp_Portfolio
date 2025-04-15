@@ -39,7 +39,8 @@ class ExpensesController < ApplicationController
       @expense.shared_participants.delete(shared_participant)
     end
     @expense.destroy
-    redirect_to trip_participant_expense_path(@trip, @participant), notice: "Expense deleted."
+    # redirect_to trip_participant_expense_path(@trip, @participant), notice: "Expense deleted."
+    redirect_to trip_participant_expenses_path(params[:trip_id], params[:participant_id]), notice: "Expense was successfully deleted."
   end
 
   private
