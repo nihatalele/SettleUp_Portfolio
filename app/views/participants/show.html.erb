@@ -1,23 +1,27 @@
-
 <h1><%= @participant.name %> - Trip Summary</h1>
 
 <div>
-<p><strong>Trip:</strong> <%= @trip.name %></p>
+  <p><strong>Trip:</strong> <%= @trip.name %></p>
 
-<p><strong>Total Spent:</strong> $<%= '%.2f' % @total_spent %></p>
-<p><strong>Total Owed To Others: </strong> $<%= '%.2f' % @total_owed %></p>
+  <p><strong>Total Spent:</strong> <%= number_to_currency(@total_spent, unit: currency_symbol(@trip.currency)) %></p>
+  <p><strong>Total Owed To Others:</strong> <%= number_to_currency(@total_owed, unit: currency_symbol(@trip.currency)) %></p>
 
-<% if @owes_to_each.any? %>
-  <h2>Amounts Owed to Others:</h2>
-  <ul>
-    <% @owes_to_each.each do |name, amount| %>
-      <li><%= @participant.name %> owes <%= name %>: $<%= '%.2f' % amount %></li>
-    <% end %>
-  </ul>
-<% else %>
-  <p><%= @participant.name %> owes nothing to others.</p>
-<% end %>
+  <% if @owes_to_each.any? %>
+    <h2>Amounts Owed to Others:</h2>
+    <ul>
+      <% @owes_to_each.each do |name, amount| %>
+        <li>
+          <%= @participant.name %> owes <%= name %>: 
+          <%= number_to_currency(amount, unit: currency_symbol(@trip.currency)) %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p><%= @participant.name %> owes nothing to others.</p>
+  <% end %>
 </div>
+
 <br>
 
-<%= link_to "Back to Trip", trip_path(@trip), class: "btn btn-primary"%>
+<%= link_to "Back to Trip", trip_path(@trip), class: "btn btn-primary" %>
+
