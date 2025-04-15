@@ -1,5 +1,3 @@
-
-
 <p style="color: green"><%= notice %></p>
 
 <% content_for :title, "Expenses" %>
@@ -7,24 +5,29 @@
 <h1>Expenses for <%= @participant.name %></h1>
 
 <div>
-<% if @participant.expenses.any? %>
-  <ul>
-    <% @participant.expenses.each do |expense| %>
-      <li>
-	<%= expense.description %> – 
-	<%= expense.currency.present? ? number_to_currency(expense.amount, unit: expense.currency) : "Amount: #{expense.amount}" %>
-	(≈ <%= number_to_currency(convert_to_trip_currency(expense), unit: @trip.currency) %>) 
-	<em>(<%= expense.category_name.to_s.titleize %>)</em>
-
-        <br>
-        <%= link_to "View details", trip_participant_expense_path(@trip, @participant, expense) %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>No expenses recorded.</p>
-<% end %>
+  <% if @participant.expenses.any? %>
+    <ul>
+      <% @participant.expenses.each do |expense| %>
+        <li>
+          <%= expense.description %> –
+          <% if expense.currency.present? && @trip.currency.present? %>
+            <%= number_to_currency(expense.amount, unit: currency_symbol(expense.currency)) %>
+            (≈ <%= number_to_currency(convert_to_trip_currency(expense), unit: currency_symbol(@trip.currency)) 
+%>)
+          <% else %>
+            Amount: <%= expense.amount %> (Currency missing)
+          <% end %>
+          <em>(<%= expense.category_name.to_s.titleize %>)</em>
+          <br>
+          <%= link_to "View details", trip_participant_expense_path(@trip, @participant, expense) %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No expenses recorded.</p>
+  <% end %>
 </div>
 
 <%= link_to "Add New Expense", new_trip_participant_expense_path(@trip, @participant), class: "btn btn-primary" %>
 <%= link_to "Back to trip details", trip_path(@trip), class: "btn btn-primary" %>
+
