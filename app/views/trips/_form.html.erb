@@ -23,6 +23,9 @@
     <%= form.label :end_date, style: "display: block" %>
     <%= form.date_field :end_date %>
 
+    <%= form.label :currency, style: "display: block" %>
+    <%= form.select :currency, ['USD', 'EUR', 'GBP', 'INR', 'JPY'], {}, class: "form-control" %>
+
     <%= form.submit %>
   </div>
 <% end %>

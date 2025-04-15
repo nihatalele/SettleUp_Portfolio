@@ -24,6 +24,10 @@
     <%= form.number_field :amount, step: 0.01 %>
     <br>
 
+    <%= form.label :currency, style: "display: block" %>
+    <%= form.select :currency, ['USD', 'EUR', 'GBP', 'INR', 'JPY'], {}, class: "form-control" %>
+    <br>
+
     <%= form.label :date %>
     <%= form.date_select :date %>
     <br>

@@ -1,32 +1,60 @@
-
 <p style="color: green"><%= notice %></p>
 
 <h1>Trip Details</h1>
 
 <div>
-<%= render @trip %>
+  <%= render @trip %>
 </div>
 
 <div>
+  <% if @trip.currency.present? %>
+    <h2>Total Expenses in <%= @trip.currency %>:</h2>
+    <p>
+      <strong>
+        <%= number_to_currency(@trip.expenses.sum { |e| convert_to_trip_currency(e) }, unit: 
+@trip.currency) %>
+      </strong>
+    </p>
+  <% else %>
+    <p style="color: red;">Trip currency not set.</p>
+  <% end %>
+
   <h2>Participants</h2>
+  <h3>Expenses by Participant (in <%= @trip.currency || "?" %>)</h3>
+
+  <% if @trip.currency.present? %>
+    <ul>
+      <% @trip.participants.each do |participant| %>
+        <% total = participant.expenses.where(trip_id: @trip.id).sum { |e| convert_to_trip_currency(e) } %>
+        <li><%= participant.name %>: <%= number_to_currency(total, unit: @trip.currency) %></li>
+      <% end %>
+    </ul> 
+  <% else %>
+     <p style="color: red;">Trip currency is missing. Please set a currency for this trip.</p>
+  <% end %>
+
+
   <ul>
     <% @trip.participants.each do |participant| %>
       <li>
         <%= participant.name %>
-        <%= link_to "View Summary", trip_participant_path(@trip, participant), class: "btn btn-secondary" %>
-        <%= link_to "View Expenses", trip_participant_expenses_path(@trip, participant), class: "btn btn-secondary" %>
-      </li> 
+        <%= link_to "View Summary", trip_participant_path(@trip, participant), class: "btn 
+btn-secondary" %>
+        <%= link_to "View Expenses", trip_participant_expenses_path(@trip, participant), class: 
+"btn btn-secondary" %>
+      </li>
     <% end %>
   </ul>
-  </div>
+</div>
 
-  <div>
+<div>
+ <% if @trip.currency.present? %>
   <h2>Settle Up!</h2>
 
   <table>
     <thead>
       <tr>
-        <th></th> <%# Empty header for participant names %>
+        <th></th>
         <% @trip.participants.each do |participant| %>
           <th><%= participant.name %></th>
         <% end %>
@@ -38,21 +66,23 @@
           <th><%= payer.name %></th>
           <% @trip.participants.each do |receiver| %>
             <% if payer == receiver %>
-              <td>-</td> <%# Don't show balance for same participant %>
+              <td>-</td>
             <% else %>
               <% balance = payer.net_balance(receiver) %>
               <td>
                 <% if balance > 0 %>
-                  <%= payer.name %> owes <%= receiver.name %>: $<%= '%.2f' % balance %>
+			<%= payer.name %> owes <%= receiver.name %>: 
+			<%= number_to_currency(balance, unit: @trip.currency) %>
                 <% elsif balance < 0 %>
-                  <%# Only show message in the payer's column %>
                   <% if payer == receiver %>
-                    <%= receiver.name %> owes <%= payer.name %>: $<%= '%.2f' % balance.abs %>
+			<%= receiver.name %> owes <%= payer.name %>: 
+			<%= number_to_currency(balance.abs, unit: @trip.currency) %>
+
                   <% else %>
-                    - <%# Add "-" when the payer is not the receiver, and balance is negative %>
+                    -
                   <% end %>
                 <% else %>
-                  - <%# No balance %>
+                  -
                 <% end %>
               </td>
             <% end %>
@@ -61,11 +91,14 @@
       <% end %>
     </tbody>
   </table>
-  </div>
+ <% else %>
+  <p style="color: red;">Trip currency not set. Cannot show settle-up amounts.</p>
+ <% end %>
+</div>
 
-
-  <%= link_to "Edit this trip", edit_trip_path(@trip), class: "btn btn-primary" %>
-  <%= link_to "Back to trips", trips_path, class: "btn btn-primary" %>
-  <hr>
-  <%= button_to "Delete this trip", trip_path(@trip), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+<%= link_to "Edit this trip", edit_trip_path(@trip), class: "btn btn-primary" %>
+<%= link_to "Back to trips", trips_path, class: "btn btn-primary" %>
+<hr>
+<%= button_to "Delete this trip", trip_path(@trip), method: :delete, data: { confirm: "Are you 
+sure?" }, class: "btn btn-danger" %>
 

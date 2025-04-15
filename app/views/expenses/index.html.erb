@@ -11,7 +11,11 @@
   <ul>
     <% @participant.expenses.each do |expense| %>
       <li>
-        <%= expense.description %> - $<%= '%.2f' % expense.amount %> (<%= expense.category_name.to_s.titleize.presence || 'Uncategorized' %>)
+	<%= expense.description %> – 
+	<%= expense.currency.present? ? number_to_currency(expense.amount, unit: expense.currency) : "Amount: #{expense.amount}" %>
+	(≈ <%= number_to_currency(convert_to_trip_currency(expense), unit: @trip.currency) %>) 
+	<em>(<%= expense.category_name.to_s.titleize %>)</em>
+
         <br>
         <%= link_to "View details", trip_participant_expense_path(@trip, @participant, expense) %>
       </li>
