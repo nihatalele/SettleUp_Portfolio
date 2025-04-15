@@ -13,16 +13,10 @@ body {
   gap: 20px; /* Consistent spacing between elements */
 }
 
-.top-left-logo {
-  position: fixed; /* Fix the logo to the top left */
-  top: 10px; /* Adjust top position */
-  left: 10px; /* Adjust left position */
-  z-index: 1000; /* Ensure the logo is above other content */
-}
-
 .top-left-logo img {
-  max-width: 10px; /* Adjust the logo size */
+  max-width: 200px; /* Adjust the logo size */
   height: auto;
+  padding-top: 20px;
 }
 
 table {
@@ -51,15 +45,13 @@ table tr:hover {
   background-color: #f1f1f1;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1;
-}
 
 h1 {
   font-size: 3em;
   letter-spacing: -2px;
   margin-bottom: 30px;
   text-align: center;
+  border-bottom: 2px solid #ddd;
   padding-bottom: 10px;
 }
 

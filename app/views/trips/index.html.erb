@@ -4,14 +4,16 @@
 
 <h1>Trips</h1>
 
-<div class="trips">
+<span class="trips">
   <% @trips.each do |trip| %>
+    <div>
     <%= render trip %>
     <p>
       <%= link_to "View trip details", trip_path(trip), class: "btn btn-primary" %>
     </p>
+    </div>
   <% end %>
-</div>
+</span>
 
 
 <%= link_to "New trip", new_trip_path, class: "btn btn-primary" %>
