@@ -1,8 +1,8 @@
 module ApplicationHelper
   CURRENCY_RATES = {
     "USD" => 1.0,
-    "EUR" => 1.1,
-    "GBP" => 1.3,
+    "EUR" => 1.13,
+    "GBP" => 1.32,
     "INR" => 0.012,
     "JPY" => 0.007
   }
@@ -18,8 +18,8 @@ module ApplicationHelper
   def convert_to_trip_currency(expense)
     return 0 unless expense.amount && expense.currency.present? && expense.trip&.currency.present?
 
-    from_rate = CURRENCY_RATES[expense.currency]
-    to_rate = CURRENCY_RATES[expense.trip.currency]
+    from_rate = CURRENCY_RATES[expense.trip.currency]
+    to_rate = CURRENCY_RATES[expense.currency]
     return 0 unless from_rate && to_rate
 
     (expense.amount / from_rate) * to_rate

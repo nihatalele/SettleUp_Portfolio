@@ -29,8 +29,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_15_154551) do
     t.integer "trip_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "currency"
     t.integer "category"
+    t.string "currency"
     t.index ["participant_id"], name: "index_expenses_on_participant_id"
     t.index ["trip_id"], name: "index_expenses_on_trip_id"
   end
@@ -41,6 +41,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_15_154551) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["trip_id"], name: "index_participants_on_trip_id"
+  end
+
+  create_table "test_enums", force: :cascade do |t|
+    t.integer "thing"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "trips", force: :cascade do |t|
