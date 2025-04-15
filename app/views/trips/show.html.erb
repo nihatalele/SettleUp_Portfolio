@@ -22,19 +22,6 @@ currency_symbol(@trip.currency)) %>
 
 <div>
   <h2>Participants</h2>
-  <h3>Expenses by Participant (in <%= currency_symbol(@trip.currency) || "?" %>)</h3>
-
-  <% if @trip.currency.present? %>
-    <ul>
-      <% @trip.participants.each do |participant| %>
-        <% total = participant.expenses.where(trip_id: @trip.id).sum { |e| convert_to_trip_currency(e) } %>
-        <li><%= participant.name %>: <%= number_to_currency(total, unit: currency_symbol(@trip.currency)) %></li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p style="color: red;">Trip currency is missing. Please set a currency for this trip.</p>
-  <% end %>
-  <hr>
   <ul>
     <% @trip.participants.each do |participant| %>
       <li>

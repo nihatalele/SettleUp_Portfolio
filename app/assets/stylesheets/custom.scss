@@ -2,132 +2,188 @@
 @import "bootstrap";
 
 body {
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
-
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
 }
 
+.container { 
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Consistent spacing between elements */
+}
+
+.top-left-logo {
+  position: fixed; /* Fix the logo to the top left */
+  top: 10px; /* Adjust top position */
+  left: 10px; /* Adjust left position */
+  z-index: 1000; /* Ensure the logo is above other content */
+}
+
+.top-left-logo img {
+  max-width: 10px; /* Adjust the logo size */
+  height: auto;
+}
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1.2em;
-    text-align: left;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 1.2em;
+  text-align: left;
 }
 
 table th, table td {
-    border: 1px solid #ddd;
-    padding: 8px;
+  border: 1px solid #ddd;
+  padding: 8px;
 }
 
 table th {
-    background-color: #f4f4f4;
-    font-weight: bold;
+  background-color: #f4f4f4;
+  font-weight: bold;
 }
 
 table tr:nth-child(even) {
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 
 table tr:hover {
-    background-color: #f1f1f1;
+  background-color: #f1f1f1;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    line-height: 1;
-  }
-  
-  h1 {
-    font-size: 3em;
-    letter-spacing: -2px;
-    margin-bottom: 30px;
-    text-align: center;
-    padding-bottom: 10px;
-  }
-  
-  h2 {
-    font-size: 2.5m;
-    letter-spacing: -1px;
-    margin-bottom: 30px;
-    text-align: center;
-    font-weight: normal;
-    color: #777;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 10px;
-  }
-  
-  p {
-    font-size: 1.1em;
-    line-height: 1.7em;
-  }
-
-ul {
-    margin: 20px 0;
-    padding: 0;
-    list-style-type: none;
-    font-size: 1.2em;
+  line-height: 1;
 }
 
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+h2 {
+  font-size: 2.5m;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: #777;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+
+ul {
+  margin: 20px 0;
+  padding: 0;
+  list-style-type: none;
+  font-size: 1.2em;
+}
 
 ul li {
-    margin: 10px 0;
-    padding-left: 20px;
-    position: relative;
+  margin: 10px 0;
+  padding-left: 20px;
+  position: relative;
 }
 
 ul li::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: #555;
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #555;
 }
 
 div {
-    margin: 20px 0;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 p {
-    color: #333;
-    margin-bottom: 15px;
-    font-size : 1.2em;
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.2em;
 }
 
 .btn.btn-secondary {
-    background-color: #6c757d;
-    color: #fff;
-    border: 1px solid #6c757d;
-    font-size: .8em;
+  background-color: #6c757d;
+  color: #fff;
+  border: 1px solid #6c757d;
+  font-size: .8em;
 }
 
-.btn.btn-primary{
-    color: #fff;
-    font-size: 1em;
-    padding: 10px 20px;
+.btn.btn-primary {
+  color: #fff;
+  font-size: 1em;
+  padding: 10px 20px;
 }
 
-.btn.btn-danger{
-    background-color: #dc3545;
-    color: #fff;
-    border: 1px solid #dc3545;
-    padding: 10px 20px;
-    font-size: 1em;
-    float : right;
+.btn.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+  border: 1px solid #dc3545;
+  padding: 10px 20px;
+  font-size: 1em;
+  float: right;
 }
 
 hr {
-    border: none;
-    height: 2px;
-    background-color: #ddd;
-    margin: 20px 0;
+  border: none;
+  height: 2px;
+  background-color: #ddd;
+  margin: 20px 0;
 }
 
 p {
-    text-align: center;
+  text-align: center;
+}
+
+/* Adjustments for Trip Items */
+.trip-item {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px; /* Add some spacing between trip items */
+}
+
+.trip-item h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.trip-item p {
+  margin: 5px 0;
+}
+
+.trip-item .button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Adjustments for the 'New trip' section */
+.new-trip-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Spacing between the button and input field */
+  margin-top: 20px; /* Add space above the 'New trip' section */
+}
+
+.new-trip-section input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
