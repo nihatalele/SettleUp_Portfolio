@@ -29,8 +29,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_15_154551) do
     t.integer "trip_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "category"
     t.string "currency"
+    t.integer "category"
     t.index ["participant_id"], name: "index_expenses_on_participant_id"
     t.index ["trip_id"], name: "index_expenses_on_trip_id"
   end

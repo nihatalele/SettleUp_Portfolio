@@ -10,4 +10,10 @@
     <%= expense.trip_id %>
   </p>
 
+  <p>
+    <strong>Currency:</strong>
+    <%= expense.currency.present? ? expense.currency : "Currency missing" %>
+  </p>
+
+
 </div>
