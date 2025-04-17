@@ -36,7 +36,7 @@
     <%= form.select :category, Expense::CATEGORIES.map { |k, v| [k.to_s.titleize, v] }, { prompt: 'Select a category' } %>
     <br>
 
-    <%= form.label :shared_participant_ids, "Shared With" %>
+    <%= form.label :shared_participant_ids, "Select participants in the split: " %>
     <%= form.collection_check_boxes :shared_participant_ids, @trip.participants, :id, :name %>
     <br>
 

@@ -20,11 +20,11 @@ end
   # This method calculates the share amount for each participant involved in the expense.
   def calculate_shares
     if shared_participants.any?
-      share_amount = amount / (shared_participants.count + 1)
+      share_amount = amount / shared_participants.count
 
       expense_shares.each do |share|
         if share.participant == participant  # Check if it's the payer
-          share.update(amount_owed: amount - (shared_participants.count * share_amount))
+          share.update(amount_owed: 0)  # Payer does not owe themselves
         else
           share.update(amount_owed: share_amount)
         end
@@ -32,7 +32,7 @@ end
 
       # Ensure there's a share record for the payer if they weren't in shared_participants
       unless expense_shares.exists?(participant: participant)
-        expense_shares.create(participant: participant, amount_owed: amount - (shared_participants.count * share_amount))
+        expense_shares.create(participant: participant, amount_owed: 0)
       end
     end
   end
