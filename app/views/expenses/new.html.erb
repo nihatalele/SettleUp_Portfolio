@@ -1,11 +1,9 @@
+<% content_for :title, "New Expense for #{@participant.name}" %>
 
-
-<% content_for :title, "New Expense" %>
-
-<h1>New Expense</h1>
+<h1>New Expense for <%= @participant.name %></h1>
 
 <%= render "form", expense: @expense %>
 
 <br>
 
-<%= link_to "Back to participant's expenses", trip_participant_expenses_path(@trip, @participant), class: "btn btn-primary"%>
+<%= link_to "Back to participant's expenses", trip_participant_expenses_path(@trip, @participant), class: "btn btn-primary" %>

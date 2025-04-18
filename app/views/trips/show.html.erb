@@ -1,18 +1,17 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Trip Details</h1>
-
-<div>
-  <%= render @trip %>
-</div>
+<div><%= render @trip %></div>
 
 <div>
   <% if @trip.currency.present? %>
     <h2>Total Expenses in <%= currency_symbol(@trip.currency) %>:</h2>
     <p>
       <strong>
-        <%= number_to_currency(@trip.expenses.sum { |e| convert_to_trip_currency(e) }, unit: 
-currency_symbol(@trip.currency)) %>
+        <%= number_to_currency(
+              @trip.expenses.sum { |e| convert_to_trip_currency(e) },
+              unit: currency_symbol(@trip.currency)
+            ) %>
       </strong>
     </p>
   <% else %>
@@ -26,9 +25,12 @@ currency_symbol(@trip.currency)) %>
     <% @trip.participants.each do |participant| %>
       <li>
         <%= participant.name %>
-        <%= link_to "View summary", trip_participant_path(@trip, participant), class: "btn btn-secondary" %>
-        <%= link_to "View expenses", trip_participant_expenses_path(@trip, participant), class: "btn btn-secondary" 
-%>
+        <%= link_to "View summary",
+                    trip_participant_path(@trip, participant),
+                    class: "btn btn-secondary" %>
+        <%= link_to "View expenses",
+                    trip_participant_expenses_path(@trip, participant),
+                    class: "btn btn-secondary" %>
       </li>
     <% end %>
   </ul>
@@ -37,15 +39,15 @@ currency_symbol(@trip.currency)) %>
 <div>
   <% if @trip.currency.present? %>
     <h2>Settle Up!</h2>
-
     <p>Here are the amounts each participant owes to each other</p>
     <p>Rows represent the payer, and columns represent the receiver</p>
-    <table>
+
+    <table class="table" data-trip-id="<%= @trip.id %>">
       <thead>
         <tr>
           <th></th>
-          <% @trip.participants.each do |participant| %>
-            <th><%= participant.name %></th>
+          <% @trip.participants.each do |p| %>
+            <th><%= p.name %></th>
           <% end %>
         </tr>
       </thead>
@@ -57,18 +59,23 @@ currency_symbol(@trip.currency)) %>
               <% if payer == receiver %>
                 <td>-</td>
               <% else %>
-                <% balance = payer.net_balance(receiver) %>
+                <% bal = payer.net_balance(receiver) %>
                 <td>
-                  <% if balance > 0 %>
-                    <%= payer.name %> owes <%= receiver.name %>: 
-                    <%= number_to_currency(balance, unit: currency_symbol(@trip.currency)) %>
-                  <% elsif balance < 0 %>
-                    <% if payer == receiver %>
-                      <%= receiver.name %> owes <%= payer.name %>: 
-                      <%= number_to_currency(balance.abs, unit: currency_symbol(@trip.currency)) %>
-                    <% else %>
-                      -
-                    <% end %>
+                  <% if bal > 0 %>
+                    <% checkbox_id = "settle_#{payer.id}_#{receiver.id}" %>
+                    <div
+                      class="form-check p-2 rounded bg-danger text-white"
+                      id="wrapper_<%= checkbox_id %>"
+                    >
+                      <%= check_box_tag checkbox_id,
+                                        "1",
+                                        false,
+                                        class: "form-check-input settle-checkbox" %>
+                      <%= label_tag checkbox_id,
+                                    "#{payer.name} owes #{receiver.name}: " \
+                                    "#{number_to_currency(bal, unit: currency_symbol(@trip.currency))}",
+                                    class: "form-check-label ms-2" %>
+                    </div>
                   <% else %>
                     -
                   <% end %>
@@ -84,8 +91,51 @@ currency_symbol(@trip.currency)) %>
   <% end %>
 </div>
 
-<%= link_to "Edit this trip", edit_trip_path(@trip), class: "btn btn-primary" %>
-<%= link_to "Back to trips", trips_path, class: "btn btn-primary" %>
+<%= link_to "Edit this trip",
+            edit_trip_path(@trip),
+            class: "btn btn-primary" %>
+<%= link_to "Back to trips",
+            trips_path,
+            class: "btn btn-primary" %>
 <hr>
-<%= button_to "Delete this trip", trip_path(@trip), method: :delete, data: { confirm: "Are you sure?" }, class: 
-"btn btn-danger" %>
+<%= button_to "Delete this trip",
+              trip_path(@trip),
+              method: :delete,
+              data: { confirm: "Are you sure?" },
+              class: "btn btn-danger" %>
+
+<script>
+  function initSettleCheckboxes() {
+    const table = document.querySelector('table[data-trip-id]');
+    if (!table) return;
+    const tripId = table.dataset.tripId;
+
+    document.querySelectorAll('.settle-checkbox').forEach(cb => {
+      const wrapper = document.getElementById('wrapper_' + cb.id);
+      const storageKey = `settled_${tripId}_${cb.id}`;
+
+      // Restore state: green if settled, otherwise leave red
+      if (localStorage.getItem(storageKey)) {
+        cb.checked = true;
+        wrapper.classList.remove('bg-danger');
+        wrapper.classList.add('bg-success');
+      }
+
+      // On toggle, switch between red and green, persist in localStorage
+      cb.addEventListener('change', () => {
+        if (cb.checked) {
+          wrapper.classList.remove('bg-danger');
+          wrapper.classList.add('bg-success');
+          localStorage.setItem(storageKey, '1');
+        } else {
+          wrapper.classList.remove('bg-success');
+          wrapper.classList.add('bg-danger');
+          localStorage.removeItem(storageKey);
+        }
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initSettleCheckboxes);
+  document.addEventListener('turbo:load',      initSettleCheckboxes);
+</script>
