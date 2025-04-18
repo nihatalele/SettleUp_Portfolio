@@ -1,4 +1,3 @@
-
 <%= form_with(model: [@trip, @participant, @expense]) do |form| %>
   <% if @expense.errors.any? %>
     <div style="color: red">
@@ -15,7 +14,6 @@
   <%= form.hidden_field :participant_id, value: @participant.id %>
 
   <div>
-    
     <%= form.label :description %>
     <%= form.text_field :description %>
     <br>
@@ -37,7 +35,10 @@
     <br>
 
     <%= form.label :shared_participant_ids, "Shared With" %>
-    <%= form.collection_check_boxes :shared_participant_ids, @trip.participants, :id, :name do |b| %>
+    <!-- Include payer and others: checkboxes for everyone -->
+    <%= form.collection_check_boxes :shared_participant_ids,
+          @trip.participants,
+          :id, :name do |b| %>
       <div>
         <%= b.check_box %>
         <%= b.label %>

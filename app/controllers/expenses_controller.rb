@@ -63,7 +63,7 @@ class ExpensesController < ApplicationController
     # @expense = @trip.expenses.find(params[:id])
     # @expense = @trip.expenses.find_by(id: params[:id], participant_id: @participant.id)
     # @expense = @trip.expenses.find_by(id: params[:id], participant_id: @participant.id)
-    @expense = @participant.expenses.find_by(params[:id])
+    @expense = @participant.expenses.find(params[:id])
   end
 
   def expense_params

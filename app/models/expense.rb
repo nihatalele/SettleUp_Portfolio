@@ -1,15 +1,15 @@
 class Expense < ApplicationRecord
   CATEGORIES = {
-  food: 0,
-  lodging: 1,
-  gas: 2,
-  entertainment: 3,
-  other: 4
-}
+    food: 0,
+    lodging: 1,
+    gas: 2,
+    entertainment: 3,
+    other: 4
+  }
 
-def category_name
-  CATEGORIES.key(self[:category])
-end
+  def category_name
+    CATEGORIES.key(self[:category])
+  end
 
   belongs_to :trip
   belongs_to :participant  # the one who paid
@@ -17,34 +17,21 @@ end
   has_many :expense_shares, dependent: :destroy
   has_many :shared_participants, through: :expense_shares, source: :participant
 
-  # This method calculates the share amount for each participant involved in the expense.
+  # Recalculate shares based on exactly what was checked in the form.
   def calculate_shares
-    if shared_participants.any?
-      share_amount = amount / shared_participants.count
+    # Remove old share records
+    expense_shares.destroy_all
 
-      expense_shares.each do |share|
-        if share.participant == participant  # Check if it's the payer
-          share.update(amount_owed: 0)  # Payer does not owe themselves
-        else
-          share.update(amount_owed: share_amount)
-        end
-      end
+    # Determine sharers from form input
+    sharer_ids = Array(shared_participant_ids).map(&:to_i)
+    return if sharer_ids.empty?
 
-      # Ensure there's a share record for the payer if they weren't in shared_participants
-      unless expense_shares.exists?(participant: participant)
-        expense_shares.create(participant: participant, amount_owed: 0)
-      end
+    # Split the total equally among all sharers
+    split_amount = amount.to_f / sharer_ids.size
+
+    # Create a fresh share for each selected participant
+    sharer_ids.each do |pid|
+      expense_shares.create!(participant_id: pid, amount_owed: split_amount)
     end
-  end
-
-  # This method calculates the amount the person who paid the expense is also owed.
-  def update_payer_owed(share_amount)
-    # Calculate the amount owed to the payer by subtracting the total amount shared
-    # from the original expense amount.
-    payer_share = amount - (shared_participants.count * share_amount)
-
-    # Create an ExpenseShare record for the payer, showing how much they are owed.
-    # This is necessary, because the person who pays, is also a participant.
-    expense_shares.create(participant: participant, amount_owed: payer_share)
   end
 end
