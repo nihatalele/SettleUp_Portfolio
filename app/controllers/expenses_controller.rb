@@ -2,6 +2,7 @@ class ExpensesController < ApplicationController
   before_action :set_trip
   before_action :set_participant
   before_action :set_expense, only: %i[show edit update destroy]
+  before_action :authenticate_user!
 
   def new
     @expense = @participant.expenses.build

@@ -1,9 +1,10 @@
 class TripsController < ApplicationController
   before_action :set_trip, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
 
   # GET /trips or /trips.json
   def index
-    @trips = Trip.all
+    @trips = current_user.trips
   end
 
   
@@ -19,7 +20,8 @@ class TripsController < ApplicationController
 
   # POST /trips or /trips.json
   def create
-    @trip = Trip.new(trip_params)
+    #@trip = Trip.new(trip_params)
+    @trip = current_user.trips.build(trip_params)
 
     respond_to do |format|
       if @trip.save
@@ -33,7 +35,7 @@ class TripsController < ApplicationController
   end
 
   def show
-    @trip = Trip.find(params[:id])
+    @trip = current_user.trips.find(params[:id])
     @participants = @trip.participants
   end
 
@@ -52,7 +54,7 @@ class TripsController < ApplicationController
 
   # DELETE /trips/1 or /trips/1.json
   def destroy
-    @trip = Trip.find(params[:id])
+    @trip = current_user.trips.find(params[:id])
     @trip.participants.each do |participant|
       participant.expenses.each do |expense|
         expense.shared_participants.each do |shared_participant|
