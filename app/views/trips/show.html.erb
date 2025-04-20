@@ -1,55 +1,51 @@
-<p style="color: green"><%= notice %></p>
+<p class="text-success"><%= notice %></p>
 
 <% content_for :title, "Trip Details" %>
 
-<h1>Trip Details</h1>
-<div><%= render @trip %></div>
+<h1 class="mb-4 text-success">Trip Details</h1>
+<div class="card p-3 shadow-sm mb-4"><%= render @trip %></div>
 
-<div>
+<div class="card p-4 mb-4 shadow-sm">
   <% if @trip.currency.present? %>
-    <h2>Total Expenses in <%= currency_symbol(@trip.currency) %>:</h2>
-    <p>
-      <strong>
-        <%= number_to_currency(
-              @trip.expenses.sum { |e| convert_to_trip_currency(e) },
-              unit: currency_symbol(@trip.currency)
-            ) %>
-      </strong>
+    <h2 class="text-success">Total Expenses in <%= currency_symbol(@trip.currency) %>:</h2>
+    <p class="fs-4 fw-bold">
+      <%= number_to_currency(
+            @trip.expenses.sum { |e| convert_to_trip_currency(e) },
+            unit: currency_symbol(@trip.currency)
+          ) %>
     </p>
   <% else %>
     <p class="text-danger">Trip currency not set.</p>
   <% end %>
 </div>
 
-<div>
-  <h2>Participants</h2>
-  <ul>
+<div class="card p-4 mb-4 shadow-sm">
+  <h2 class="text-success">Participants</h2>
+  <ul class="list-group list-group-flush mb-3">
     <% @trip.participants.each do |participant| %>
-      <li>
-        <strong><%= participant.name %></strong>
-        (<%= mail_to participant.email %>)
-        <%= link_to "Summary",
-                    trip_participant_path(@trip, participant),
-                    class: "btn btn-sm btn-secondary ms-2" %>
-        <%= link_to "Expenses",
-                    trip_participant_expenses_path(@trip, participant),
-                    class: "btn btn-sm btn-secondary ms-1" %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <strong><%= participant.name %></strong>
+          (<%= mail_to participant.email %>)
+        </div>
+        <div>
+          <%= link_to "Summary", trip_participant_path(@trip, participant), class: "btn btn-outline-success btn-sm me-2" %>
+          <%= link_to "Expenses", trip_participant_expenses_path(@trip, participant), class: "btn btn-outline-success btn-sm" %>
+        </div>
       </li>
     <% end %>
   </ul>
-  <%= link_to "Add Participant",
-              new_trip_participant_path(@trip),
-              class: "btn btn-outline-primary mt-2" %>
+  <%= link_to "Add Participant", new_trip_participant_path(@trip), class: "btn btn-success" %>
 </div>
 
-<div>
+<div class="card p-4 shadow-sm mb-4">
   <% if @trip.currency.present? %>
-    <h2>Settle Up!</h2>
-    <p>Here are the amounts each participant owes to each other</p>
-    <p>Rows represent the payer, columns the receiver</p>
+    <h2 class="text-success">Settle Up!</h2>
+    <p class="mb-1">Here are the amounts each participant owes to each other</p>
+    <p class="text-muted">Rows represent the payer, columns the receiver</p>
 
-    <table class="table" data-trip-id="<%= @trip.id %>">
-      <thead>
+    <table class="table table-bordered align-middle text-center bg-white" data-trip-id="<%= @trip.id %>">
+      <thead class="table-light">
         <tr>
           <th></th>
           <% @trip.participants.each do |p| %>
@@ -60,28 +56,23 @@
       <tbody>
         <% @trip.participants.each do |payer| %>
           <tr>
-            <th><%= payer.name %></th>
+            <th class="table-light"><%= payer.name %></th>
             <% @trip.participants.each do |receiver| %>
               <% if payer == receiver %>
-                <td class="text-center">–</td>
+                <td>–</td>
               <% else %>
                 <% bal = payer.net_balance(receiver) %>
                 <td>
                   <% if bal > 0 %>
                     <% checkbox_id = "settle_#{payer.id}_#{receiver.id}" %>
-                    <div class="form-check p-2 rounded bg-danger text-white"
-                         id="wrapper_<%= checkbox_id %>">
-                      <%= check_box_tag checkbox_id,
-                                        "1",
-                                        false,
-                                        class: "form-check-input settle-checkbox" %>
+                    <div class="form-check p-2 rounded bg-danger text-white" id="wrapper_<%= checkbox_id %>">
+                      <%= check_box_tag checkbox_id, "1", false, class: "form-check-input settle-checkbox" %>
                       <%= label_tag checkbox_id,
-                                    "#{payer.name} owes #{receiver.name}: " \
-                                    "#{number_to_currency(bal, unit: currency_symbol(@trip.currency))}",
-                                    class: "form-check-label ms-2" %>
+                            "#{payer.name} owes #{receiver.name}: #{number_to_currency(bal, unit: currency_symbol(@trip.currency))}",
+                            class: "form-check-label ms-2" %>
                     </div>
                   <% else %>
-                    <span class="text-center">–</span>
+                    <span>–</span>
                   <% end %>
                 </td>
               <% end %>
@@ -95,18 +86,11 @@
   <% end %>
 </div>
 
-<div class="mt-3">
-  <%= link_to "Edit Trip",
-              edit_trip_path(@trip),
-              class: "btn btn-primary me-2" %>
-  <%= link_to "Back to Trips",
-              trips_path,
-              class: "btn btn-secondary" %>
-  <%= button_to "Delete this Trip",
-                trip_path(@trip),
-                method: :delete,
-                data: { confirm: "Are you sure?" },
-                class: "btn btn-danger ms-2" %>
+<div class="d-flex justify-content-start gap-3 mt-4">
+  <%= link_to "Edit Trip", edit_trip_path(@trip), class: "btn btn-outline-success" %>
+  <%= link_to "Back to Trips", trips_path, class: "btn btn-secondary" %>
+  <%= button_to "Delete this Trip", trip_path(@trip), method: :delete, data: { confirm: "Are you sure?" }, class: "btn 
+btn-outline-danger" %>
 </div>
 
 <script>
@@ -141,3 +125,4 @@
   document.addEventListener('DOMContentLoaded', initSettleCheckboxes);
   document.addEventListener('turbo:load',      initSettleCheckboxes);
 </script>
+

@@ -1,181 +1,288 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-body {
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 20px;
-}
+/* Variables */
+$primary-green: #2ecc71;
+$secondary-green: #27ae60;
+$light-green: #e8f5e9;
+$dark-green: #1e8449;
+$accent-green: #a5d6a7;
+$spacing-unit: 1rem;
 
-.container { 
+body {
+  padding: 0;
+  background-color: #f8f9fa;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Consistent spacing between elements */
 }
 
-.top-left-logo img {
-  max-width: 200px; /* Adjust the logo size */
-  height: auto;
-  padding-top: 20px;
-}
-
-table {
+.container {
+  padding: $spacing-unit * 1.5;
+  max-width: 1200px;
+  margin: 0 auto;
   width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  font-size: 1.2em;
-  text-align: left;
+  flex: 1 0 auto;
 }
 
-table th, table td {
-  border: 1px solid #ddd;
-  padding: 8px;
+.navbar {
+  background-color: $primary-green;
+  padding: $spacing-unit;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: $spacing-unit * 2;
+
+  .navbar-brand {
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding: $spacing-unit * 0.5;
+    
+    img {
+      margin-right: $spacing-unit * 0.5;
+    }
+  }
+
+  .nav-link {
+    color: white;
+    padding: $spacing-unit * 0.5 $spacing-unit;
+    
+    &:hover {
+      color: $light-green;
+    }
+  }
+
+  .btn-outline-light {
+    margin-left: $spacing-unit;
+  }
 }
 
-table th {
-  background-color: #f4f4f4;
-  font-weight: bold;
-}
-
-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-table tr:hover {
-  background-color: #f1f1f1;
-}
-
-
+/* Headers */
 h1 {
-  font-size: 3em;
-  letter-spacing: -2px;
-  margin-bottom: 30px;
+  color: $dark-green;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: $spacing-unit * 2 0;
   text-align: center;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 10px;
+  border-bottom: 3px solid $accent-green;
+  padding-bottom: $spacing-unit;
 }
 
 h2 {
-  font-size: 2.5m;
-  letter-spacing: -1px;
-  margin-bottom: 30px;
-  text-align: center;
-  font-weight: normal;
-  color: #777;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 10px;
+  color: $secondary-green;
+  font-size: 2rem;
+  margin: $spacing-unit * 1.5 0;
+  font-weight: 600;
 }
 
-p {
-  font-size: 1.1em;
-  line-height: 1.7em;
-}
-
-ul {
-  margin: 20px 0;
-  padding: 0;
-  list-style-type: none;
-  font-size: 1.2em;
-}
-
-ul li {
-  margin: 10px 0;
-  padding-left: 20px;
-  position: relative;
-}
-
-ul li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: #555;
-}
-
-div {
-  margin: 20px 0;
-  padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
+/* Cards and Containers */
+.card {
+  background: white;
+  border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: $spacing-unit * 2;
+  border: 1px solid $accent-green;
+  
+  .card-header {
+    background-color: $light-green;
+    border-bottom: 1px solid $accent-green;
+    padding: $spacing-unit;
+  }
+  
+  .card-body {
+    padding: $spacing-unit * 1.5;
+  }
 }
 
-p {
-  color: #333;
-  margin-bottom: 15px;
-  font-size: 1.2em;
+/* Buttons */
+.btn {
+  padding: $spacing-unit * 0.5 $spacing-unit;
+  margin: $spacing-unit * 0.25;
 }
 
-.btn.btn-secondary {
-  background-color: #6c757d;
-  color: #fff;
-  border: 1px solid #6c757d;
-  font-size: .8em;
+.btn-primary {
+  background-color: $primary-green;
+  border-color: $primary-green;
+  
+  &:hover {
+    background-color: $secondary-green;
+    border-color: $secondary-green;
+  }
 }
 
-.btn.btn-primary {
-  color: #fff;
-  font-size: 1em;
-  padding: 10px 20px;
+.btn-secondary {
+  background-color: $accent-green;
+  border-color: $accent-green;
+  color: $dark-green;
+  
+  &:hover {
+    background-color: darken($accent-green, 5%);
+    border-color: darken($accent-green, 5%);
+    color: $dark-green;
+  }
 }
 
-.btn.btn-danger {
-  background-color: #dc3545;
-  color: #fff;
-  border: 1px solid #dc3545;
-  padding: 10px 20px;
-  font-size: 1em;
-  float: right;
+.btn-danger {
+  background-color: #e74c3c;
+  border-color: #c0392b;
+  
+  &:hover {
+    background-color: #c0392b;
+    border-color: #a93226;
+  }
 }
 
-hr {
-  border: none;
-  height: 2px;
-  background-color: #ddd;
-  margin: 20px 0;
+/* Tables */
+table {
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: $spacing-unit * 1.5 0;
+  
+  th {
+    background-color: $light-green;
+    color: $dark-green;
+    font-weight: 600;
+    padding: $spacing-unit;
+    border-bottom: 2px solid $accent-green;
+  }
+  
+  td {
+    padding: $spacing-unit;
+    border-bottom: 1px solid $accent-green;
+    vertical-align: middle;
+  }
+  
+  tr:hover {
+    background-color: $light-green;
+  }
 }
 
-p {
-  text-align: center;
+/* Forms */
+.form-control {
+  border: 2px solid $accent-green;
+  border-radius: 4px;
+  padding: $spacing-unit * 0.75;
+  margin-bottom: $spacing-unit;
+  
+  &:focus {
+    border-color: $primary-green;
+    box-shadow: 0 0 0 0.2rem rgba($primary-green, 0.25);
+  }
 }
 
-/* Adjustments for Trip Items */
+.form-group {
+  margin-bottom: $spacing-unit * 1.5;
+}
+
+/* Flash Messages */
+.flash {
+  padding: $spacing-unit;
+  margin-bottom: $spacing-unit * 1.5;
+  border-radius: 4px;
+  
+  &.notice {
+    background-color: $light-green;
+    color: $dark-green;
+    border: 1px solid $accent-green;
+  }
+  
+  &.alert {
+    background-color: #ffeaea;
+    color: #c0392b;
+    border: 1px solid #e74c3c;
+  }
+}
+
+/* Trip Items */
 .trip-item {
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 5px;
+  background: white;
+  border-radius: 8px;
+  padding: $spacing-unit * 1.5;
+  margin-bottom: $spacing-unit * 1.5;
+  border: 1px solid $accent-green;
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h3 {
+    color: $dark-green;
+    margin-bottom: $spacing-unit;
+  }
+  
+  p {
+    color: #666;
+    margin-bottom: $spacing-unit * 0.75;
+    line-height: 1.5;
+  }
+}
+
+/* User Authentication */
+.auth-container {
+  max-width: 400px;
+  margin: $spacing-unit * 3 auto;
+  padding: $spacing-unit * 2;
+  background: white;
+  border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px; /* Add some spacing between trip items */
+  border: 1px solid $accent-green;
+  
+  h2 {
+    text-align: center;
+    color: $dark-green;
+    margin-bottom: $spacing-unit * 1.5;
+  }
 }
 
-.trip-item h2 {
-  margin-top: 0;
-  margin-bottom: 10px;
+/* Footer */
+.footer {
+  background-color: #f8f9fa;
+  padding: $spacing-unit * 1.5;
+  margin-top: auto;
+  border-top: 1px solid $accent-green;
+  
+  .text-muted {
+    color: $dark-green !important;
+    opacity: 0.8;
+  }
 }
 
-.trip-item p {
-  margin: 5px 0;
-}
-
-.trip-item .button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-/* Adjustments for the 'New trip' section */
-.new-trip-section {
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* Spacing between the button and input field */
-  margin-top: 20px; /* Add space above the 'New trip' section */
-}
-
-.new-trip-section input[type="text"] {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: $spacing-unit;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin: $spacing-unit 0;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    margin: $spacing-unit 0;
+  }
+  
+  .card {
+    margin-bottom: $spacing-unit;
+  }
+  
+  .navbar {
+    padding: $spacing-unit * 0.5;
+    margin-bottom: $spacing-unit;
+    
+    .navbar-brand {
+      font-size: 1.25rem;
+    }
+  }
+  
+  .auth-container {
+    margin: $spacing-unit * 1.5 auto;
+    padding: $spacing-unit;
+  }
 }
