@@ -1,5 +1,7 @@
 # cse3901-2025sp-giles-BANDProject6
 
+This project uses...
+
 ## How to Run
 1) Run "bundle install" in the terminal to install all the necessary gems in the Gemfile
 2) Run "rails db:migrate" in the terminal
