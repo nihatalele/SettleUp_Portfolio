@@ -3,9 +3,13 @@
 
 <% content_for :title, "Trip Details" %>
 
+<!-- This is a form for displaying trip details -->
 <h1 class="mb-4 text-success">Trip Details</h1>
+
+<!-- This shows the trip name, start date and end date -->
 <div class="card p-3 shadow-sm mb-4"><%= render @trip %></div>
 
+<!-- This shows the total expenses of the trip -->
 <div class="card p-4 mb-4 shadow-sm">
   <% if @trip.currency.present? %>
     <h2>Total Expenses in <%= currency_symbol(@trip.currency) %>:</h2>
@@ -20,6 +24,8 @@
   <% end %>
 </div>
 
+<!-- This shows the list of participants in the trip -->
+<!-- Each participant has a name and email, and links to their summary and expenses -->
 <div class="card p-4 mb-4 shadow-sm">
   <h2>Participants</h2>
   <ul class="list-group list-group-flush mb-3">
@@ -38,6 +44,10 @@
   <%= link_to "Add Participant", new_trip_participant_path(@trip), class: "btn btn-primary" %>
 </div>
 
+<!-- This table shows the settle-up amounts for each participant -->
+<!-- Rows represent the payer, columns represent the receiver -->
+<!-- If the trip currency is set, it shows the amounts owed -->
+<!-- Each cell shows the amount owed, and a checkbox to mark it as settled -->
 <div class="card p-4 shadow-sm mb-4">
   <% if @trip.currency.present? %>
     <h2>Settle Up!</h2>
@@ -92,6 +102,7 @@
 btn-danger" %>
 </div>
 
+<!-- This script initializes the settle checkboxes -->
 <script>
   function initSettleCheckboxes() {
     const table = document.querySelector('table[data-trip-id]');

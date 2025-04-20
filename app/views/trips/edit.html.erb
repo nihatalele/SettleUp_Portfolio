@@ -5,11 +5,14 @@
 
 <% content_for :title, "Editing trip" %>
 <%= link_to "Back to trip details", @trip, class: "btn btn-primary" %>
+
 <h1>Editing Trip</h1>
 
+<!-- This is a form for editing an existing trip -->
 <%= render "form", trip: @trip %>
 
-
+<!-- This is a section for displaying the trip's participants -->
+<!-- It includes a list of participants and buttons to add or remove participants -->
 <div>
   <h2>Participants</h2>
 

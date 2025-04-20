@@ -1,5 +1,5 @@
 
-
+<!-- This partial is used to render a form for creating or editing a trip. It includes error handling and displays the form fields. -->
 <%= form_with(model: trip) do |form| %>
   <% if trip.errors.any? %>
     <div style="color: red">
@@ -13,6 +13,7 @@
     </div>
   <% end %>
 
+  <!-- This is a form for creating or editing a trip. It includes fields for the trip name, start date, end date, and currency. -->
   <div>
     <%= form.label :name, style: "display: block" %>
     <%= form.text_field :name %>
