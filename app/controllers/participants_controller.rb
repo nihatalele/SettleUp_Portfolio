@@ -1,21 +1,18 @@
+# app/controllers/participants_controller.rb
 class ParticipantsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_trip
+  before_action only: %i[new create show edit update destroy] do
+    authorize_trip!(@trip)
+  end
+  before_action :set_participant, only: %i[show edit update destroy]
 
+  # GET /trips/:trip_id/participants/new
   def new
     @participant = @trip.participants.build
   end
 
-  def show
-    @trip = Trip.find(params[:trip_id])
-    @participant = @trip.participants.find(params[:id])
-    @total_spent = @participant.total_spent
-    @total_owed = @participant.total_owed
-    @owes_to_each = @participant.owes_to_each
-  end
-
-  def edit
-  end
-
+  # POST /trips/:trip_id/participants
   def create
     @participant = @trip.participants.build(participant_params)
     if @participant.save
@@ -25,40 +22,44 @@ class ParticipantsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /trips/1 or /trips/1.json
+  # GET /trips/:trip_id/participants/:id
+  def show
+    @total_spent  = @participant.total_spent
+    @total_owed   = @participant.total_owed
+    @owes_to_each = @participant.owes_to_each
+  end
+
+  # GET /trips/:trip_id/participants/:id/edit
+  def edit
+  end
+
+  # PATCH/PUT /trips/:trip_id/participants/:id
   def update
-    respond_to do |format|
-      if @participant.update(trip_params)
-        format.html { redirect_to @participant, notice: "Participant was successfully updated." }
-        format.json { render :show, status: :ok, location: @Participant }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @Participant.errors, status: :unprocessable_entity }
-      end
+    if @participant.update(participant_params)
+      redirect_to trip_participant_path(@trip, @participant), notice: "Participant was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
+  # DELETE /trips/:trip_id/participants/:id
   def destroy
-    @trip = Trip.find(params[:trip_id])
-    @participant = @trip.participants.find(params[:id])
-    @participant.expenses.each do |expense|
-      expense.shared_participants.each do |shared_participant|
-        expense.shared_participants.delete(shared_participant)
-      end
-      expense.destroy
-    end
+    @participant.expenses.each { |e| e.shared_participants.clear; e.destroy }
     @participant.destroy
     redirect_to edit_trip_path(@trip), notice: "Participant was successfully removed."
   end
 
-
   private
 
   def set_trip
-    @trip = Trip.find(params[:trip_id])
+    @trip = Trip.for_user(current_user).find(params[:trip_id])
+  end
+
+  def set_participant
+    @participant = @trip.participants.find(params[:id])
   end
 
   def participant_params
-    params.require(:participant).permit(:name)
+    params.require(:participant).permit(:name, :email)
   end
 end

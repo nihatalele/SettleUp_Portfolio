@@ -1,85 +1,63 @@
+# app/controllers/trips_controller.rb
 class TripsController < ApplicationController
-  before_action :set_trip, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
-
-  # GET /trips or /trips.json
-  def index
-    @trips = current_user.trips
+  before_action :set_trip, only: %i[show edit update destroy]
+  before_action only: %i[show edit update destroy] do
+    authorize_trip!(@trip)
   end
 
-  
-  
+  # GET /trips
+  def index
+    @trips = Trip.for_user(current_user)
+  end
+
   # GET /trips/new
   def new
-    @trip = Trip.new
+    @trip = current_user.trips.build
   end
 
-  # GET /trips/1/edit
-  def edit
-  end
-
-  # POST /trips or /trips.json
+  # POST /trips
   def create
-    #@trip = Trip.new(trip_params)
     @trip = current_user.trips.build(trip_params)
-
-    respond_to do |format|
-      if @trip.save
-        format.html { redirect_to @trip, notice: "Trip was successfully created." }
-        format.json { render :show, status: :created, location: @trip }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @trip.errors, status: :unprocessable_entity }
-      end
+    if @trip.save
+      redirect_to @trip, notice: "Trip was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
+  # GET /trips/:id
   def show
-    @trip = current_user.trips.find(params[:id])
     @participants = @trip.participants
   end
 
-  # PATCH/PUT /trips/1 or /trips/1.json
+  # GET /trips/:id/edit
+  def edit
+  end
+
+  # PATCH/PUT /trips/:id
   def update
-    respond_to do |format|
-      if @trip.update(trip_params)
-        format.html { redirect_to @trip, notice: "Trip was successfully updated." }
-        format.json { render :show, status: :ok, location: @trip }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @trip.errors, status: :unprocessable_entity }
-      end
+    if @trip.update(trip_params)
+      redirect_to @trip, notice: "Trip was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /trips/1 or /trips/1.json
+  # DELETE /trips/:id
   def destroy
-    @trip = current_user.trips.find(params[:id])
-    @trip.participants.each do |participant|
-      participant.expenses.each do |expense|
-        expense.shared_participants.each do |shared_participant|
-          expense.shared_participants.delete(shared_participant)
-        end
-        expense.destroy
-      end
-    end
-    @trip.participants.destroy_all
-    @trip.expenses.destroy_all
+    @trip = Trip.for_user(current_user).find(params[:id])
     @trip.destroy
-    respond_to do |format|
-      format.html { redirect_to trips_url, notice: "Trip was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to trips_path, notice: "Trip was successfully destroyed."
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_trip
-      @trip = Trip.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def trip_params
-	params.require(:trip).permit(:name, :start_date, :end_date, :currency)
-    end
+  def set_trip
+    @trip = Trip.for_user(current_user).find(params[:id])
+  end
+
+  def trip_params
+    params.require(:trip).permit(:name, :start_date, :end_date, :currency)
+  end
 end

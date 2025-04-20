@@ -1,5 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
+<% content_for :title, "Trip Details" %>
+
 <h1>Trip Details</h1>
 <div><%= render @trip %></div>
 
@@ -15,7 +17,7 @@
       </strong>
     </p>
   <% else %>
-    <p style="color: red;">Trip currency not set.</p>
+    <p class="text-danger">Trip currency not set.</p>
   <% end %>
 </div>
 
@@ -24,23 +26,27 @@
   <ul>
     <% @trip.participants.each do |participant| %>
       <li>
-        <%= participant.name %>
-        <%= link_to "View summary",
+        <strong><%= participant.name %></strong>
+        (<%= mail_to participant.email %>)
+        <%= link_to "Summary",
                     trip_participant_path(@trip, participant),
-                    class: "btn btn-secondary" %>
-        <%= link_to "View expenses",
+                    class: "btn btn-sm btn-secondary ms-2" %>
+        <%= link_to "Expenses",
                     trip_participant_expenses_path(@trip, participant),
-                    class: "btn btn-secondary" %>
+                    class: "btn btn-sm btn-secondary ms-1" %>
       </li>
     <% end %>
   </ul>
+  <%= link_to "Add Participant",
+              new_trip_participant_path(@trip),
+              class: "btn btn-outline-primary mt-2" %>
 </div>
 
 <div>
   <% if @trip.currency.present? %>
     <h2>Settle Up!</h2>
     <p>Here are the amounts each participant owes to each other</p>
-    <p>Rows represent the payer, and columns represent the receiver</p>
+    <p>Rows represent the payer, columns the receiver</p>
 
     <table class="table" data-trip-id="<%= @trip.id %>">
       <thead>
@@ -57,16 +63,14 @@
             <th><%= payer.name %></th>
             <% @trip.participants.each do |receiver| %>
               <% if payer == receiver %>
-                <td>-</td>
+                <td class="text-center">–</td>
               <% else %>
                 <% bal = payer.net_balance(receiver) %>
                 <td>
                   <% if bal > 0 %>
                     <% checkbox_id = "settle_#{payer.id}_#{receiver.id}" %>
-                    <div
-                      class="form-check p-2 rounded bg-danger text-white"
-                      id="wrapper_<%= checkbox_id %>"
-                    >
+                    <div class="form-check p-2 rounded bg-danger text-white"
+                         id="wrapper_<%= checkbox_id %>">
                       <%= check_box_tag checkbox_id,
                                         "1",
                                         false,
@@ -77,7 +81,7 @@
                                     class: "form-check-label ms-2" %>
                     </div>
                   <% else %>
-                    -
+                    <span class="text-center">–</span>
                   <% end %>
                 </td>
               <% end %>
@@ -87,22 +91,23 @@
       </tbody>
     </table>
   <% else %>
-    <p style="color: red;">Trip currency not set. Cannot show settle-up amounts.</p>
+    <p class="text-danger">Trip currency not set. Cannot show settle-up amounts.</p>
   <% end %>
 </div>
 
-<%= link_to "Edit this trip",
-            edit_trip_path(@trip),
-            class: "btn btn-primary" %>
-<%= link_to "Back to trips",
-            trips_path,
-            class: "btn btn-primary" %>
-<hr>
-<%= button_to "Delete this trip",
-              trip_path(@trip),
-              method: :delete,
-              data: { confirm: "Are you sure?" },
-              class: "btn btn-danger" %>
+<div class="mt-3">
+  <%= link_to "Edit Trip",
+              edit_trip_path(@trip),
+              class: "btn btn-primary me-2" %>
+  <%= link_to "Back to Trips",
+              trips_path,
+              class: "btn btn-secondary" %>
+  <%= button_to "Delete this Trip",
+                trip_path(@trip),
+                method: :delete,
+                data: { confirm: "Are you sure?" },
+                class: "btn btn-danger ms-2" %>
+</div>
 
 <script>
   function initSettleCheckboxes() {
@@ -114,22 +119,19 @@
       const wrapper = document.getElementById('wrapper_' + cb.id);
       const storageKey = `settled_${tripId}_${cb.id}`;
 
-      // Restore state: green if settled, otherwise leave red
+      // restore checked + green or leave red
       if (localStorage.getItem(storageKey)) {
         cb.checked = true;
-        wrapper.classList.remove('bg-danger');
-        wrapper.classList.add('bg-success');
+        wrapper.classList.replace('bg-danger', 'bg-success');
       }
 
-      // On toggle, switch between red and green, persist in localStorage
+      // on toggle: swap classes & persist
       cb.addEventListener('change', () => {
         if (cb.checked) {
-          wrapper.classList.remove('bg-danger');
-          wrapper.classList.add('bg-success');
+          wrapper.classList.replace('bg-danger', 'bg-success');
           localStorage.setItem(storageKey, '1');
         } else {
-          wrapper.classList.remove('bg-success');
-          wrapper.classList.add('bg-danger');
+          wrapper.classList.replace('bg-success', 'bg-danger');
           localStorage.removeItem(storageKey);
         }
       });
