@@ -1,5 +1,8 @@
+
 <%= link_to "Back to Trip", trip_path(@trip), class: "btn btn-primary" %>
 
+
+<!-- This is a summary page for a participant in a trip. It shows the total amount spent by the participant, the total amount owed to others, and the amounts owed to each participant. -->
 <h1><%= @participant.name %> - Trip Summary</h1>
 
 <div>
@@ -8,6 +11,7 @@
   <p><strong>Total Spent:</strong> <%= number_to_currency(@total_spent, unit: currency_symbol(@trip.currency)) %></p>
   <p><strong>Total Owed To Others:</strong> <%= number_to_currency(@total_owed, unit: currency_symbol(@trip.currency)) %></p>
 
+  <!-- If the participant has spent money, display the amounts owed to each participant -->
   <% if @owes_to_each.any? %>
     <h2>Amounts Owed to Others:</h2>
     <ul>
@@ -18,6 +22,8 @@
         </li>
       <% end %>
     </ul>
+
+    <!-- If the participant doesn't owe anything to others, display a message -->
   <% else %>
     <p><%= @participant.name %> owes nothing to others.</p>
   <% end %>

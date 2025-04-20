@@ -1,4 +1,6 @@
 <!-- app/views/participants/_form.html.erb -->
+
+<!-- This is a partial form for creating or editing a participant -->
 <%= form_with(model: [@trip, @participant]) do |form| %>
   <% if @participant.errors.any? %>
     <div class="alert alert-danger">
