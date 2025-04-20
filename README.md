@@ -8,7 +8,7 @@ This project uses...
 3) Run "rails s" in the terminal to start the application
 4) Follow the link provided as a result in the terminal
 
-## How to use Application
+## How to Use Application
 
 ## File Structure
 
