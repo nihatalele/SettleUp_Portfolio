@@ -1,4 +1,5 @@
-<p class="text-success"><%= notice %></p>
+<%= link_to "Back to Trips", trips_path, class: "btn btn-primary" %>
+<%= link_to "Edit Trip", edit_trip_path(@trip), class: "btn btn-secondary" %>
 
 <% content_for :title, "Trip Details" %>
 
@@ -7,7 +8,7 @@
 
 <div class="card p-4 mb-4 shadow-sm">
   <% if @trip.currency.present? %>
-    <h2 class="text-success">Total Expenses in <%= currency_symbol(@trip.currency) %>:</h2>
+    <h2>Total Expenses in <%= currency_symbol(@trip.currency) %>:</h2>
     <p class="fs-4 fw-bold">
       <%= number_to_currency(
             @trip.expenses.sum { |e| convert_to_trip_currency(e) },
@@ -20,29 +21,28 @@
 </div>
 
 <div class="card p-4 mb-4 shadow-sm">
-  <h2 class="text-success">Participants</h2>
+  <h2>Participants</h2>
   <ul class="list-group list-group-flush mb-3">
     <% @trip.participants.each do |participant| %>
       <li class="list-group-item d-flex justify-content-between align-items-center">
         <div>
           <strong><%= participant.name %></strong>
           (<%= mail_to participant.email %>)
-        </div>
-        <div>
+        
           <%= link_to "Summary", trip_participant_path(@trip, participant), class: "btn btn-outline-success btn-sm me-2" %>
           <%= link_to "Expenses", trip_participant_expenses_path(@trip, participant), class: "btn btn-outline-success btn-sm" %>
         </div>
       </li>
     <% end %>
   </ul>
-  <%= link_to "Add Participant", new_trip_participant_path(@trip), class: "btn btn-success" %>
+  <%= link_to "Add Participant", new_trip_participant_path(@trip), class: "btn btn-primary" %>
 </div>
 
 <div class="card p-4 shadow-sm mb-4">
   <% if @trip.currency.present? %>
-    <h2 class="text-success">Settle Up!</h2>
-    <p class="mb-1">Here are the amounts each participant owes to each other</p>
-    <p class="text-muted">Rows represent the payer, columns the receiver</p>
+    <h2>Settle Up!</h2>
+    <p>Here are the amounts each participant owes to each other</p>
+    <p>Rows represent the payer, columns the receiver</p>
 
     <table class="table table-bordered align-middle text-center bg-white" data-trip-id="<%= @trip.id %>">
       <thead class="table-light">
@@ -87,10 +87,9 @@
 </div>
 
 <div class="d-flex justify-content-start gap-3 mt-4">
-  <%= link_to "Edit Trip", edit_trip_path(@trip), class: "btn btn-outline-success" %>
-  <%= link_to "Back to Trips", trips_path, class: "btn btn-secondary" %>
+  <br>
   <%= button_to "Delete this Trip", trip_path(@trip), method: :delete, data: { confirm: "Are you sure?" }, class: "btn 
-btn-outline-danger" %>
+btn-danger" %>
 </div>
 
 <script>

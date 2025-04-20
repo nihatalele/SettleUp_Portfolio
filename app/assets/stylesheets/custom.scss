@@ -10,12 +10,19 @@ $accent-green: #a5d6a7;
 $spacing-unit: 1rem;
 
 body {
-  padding: 0;
+  padding:0;
   background-color: #f8f9fa;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+p{
+  padding-left: $spacing-unit;
+}
+div {
+  padding: $spacing-unit;
 }
 
 .container {
@@ -73,6 +80,7 @@ h2 {
   font-size: 2rem;
   margin: $spacing-unit * 1.5 0;
   font-weight: 600;
+  padding-left: $spacing-unit;
 }
 
 /* Cards and Containers */
@@ -114,6 +122,7 @@ h2 {
   background-color: $accent-green;
   border-color: $accent-green;
   color: $dark-green;
+  float: right;
   
   &:hover {
     background-color: darken($accent-green, 5%);
@@ -125,11 +134,13 @@ h2 {
 .btn-danger {
   background-color: #e74c3c;
   border-color: #c0392b;
+  float: right;
   
   &:hover {
     background-color: #c0392b;
     border-color: #a93226;
   }
+  
 }
 
 /* Tables */
@@ -219,6 +230,7 @@ table {
     color: #666;
     margin-bottom: $spacing-unit * 0.75;
     line-height: 1.5;
+    margin-left: $spacing-unit;
   }
 }
 
@@ -286,3 +298,4 @@ table {
     padding: $spacing-unit;
   }
 }
+

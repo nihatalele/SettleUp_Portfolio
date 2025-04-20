@@ -1,6 +1,5 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Expenses" %>
+<%= link_to "Back to Trip Details", trip_path(@trip), class: "btn btn-primary" %>
 
 <h1>Expenses for <%= @participant.name %></h1>
 
@@ -28,5 +27,4 @@
 </div>
 
 <%= link_to "Add New Expense", new_trip_participant_expense_path(@trip, @participant), class: "btn btn-primary" %>
-<%= link_to "Back to trip details", trip_path(@trip), class: "btn btn-primary" %>
 

@@ -1,10 +1,7 @@
 
 <% content_for :title, "Edit Expense" %>
+<%= link_to "Back to Expense Details", trip_participant_expense_path(@trip, @participant, @expense), class: "btn btn-primary"%>
 
 <h1>Edit Expense</h1>
 
 <%= render "form", expense: @expense %>
-
-<br>
-
-<%= link_to "Back to expense details", trip_participant_expense_path(@trip, @participant, @expense) %>

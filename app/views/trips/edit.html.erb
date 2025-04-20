@@ -1,11 +1,10 @@
-<p style="color: green"><%= notice %></p>
 
 <head>
 <%= stylesheet_link_tag "custom", "data-turbo-track": "reload" %>
 <head>
 
 <% content_for :title, "Editing trip" %>
-
+<%= link_to "Back to trip details", @trip, class: "btn btn-primary" %>
 <h1>Editing Trip</h1>
 
 <%= render "form", trip: @trip %>
@@ -27,4 +26,3 @@
   <%= link_to "Remove a participant", trip_participants_path(@trip), method: :delete, class: "btn btn-danger" %>
   
 </div>
-  <%= link_to "Back to trip details", @trip, class: "btn btn-primary" %>

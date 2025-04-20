@@ -45,6 +45,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_20_003932) do
     t.index ["trip_id"], name: "index_participants_on_trip_id"
   end
 
+  create_table "test_enums", force: :cascade do |t|
+    t.integer "thing"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "trips", force: :cascade do |t|
     t.string "name"
     t.date "start_date"

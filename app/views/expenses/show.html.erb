@@ -1,4 +1,6 @@
 
+<%= link_to "Back to Participant's Expenses", trip_participant_expenses_path(@trip, @participant), class: "btn btn-primary" %>
+<%= link_to "Edit the expense", edit_trip_participant_expense_path(@trip, @participant, @expense), class: "btn btn-secondary" %>
 
 <h1>Expense Details</h1>
 <div>
@@ -25,9 +27,6 @@
 <% end %>
 </div>
 
-<%= link_to "Edit the expense", edit_trip_participant_expense_path(@trip, @participant, @expense), class: "btn btn-primary" %>
 <br>
 <br>
-<%= link_to "Back to participant's expenses", trip_participant_expenses_path(@trip, @participant), class: "btn btn-primary" %>
-<hr>
-<%= button_to "Delete", trip_participant_expense_path(@trip, @participant, @expense), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+<%= button_to "Delete Expense", trip_participant_expense_path(@trip, @participant, @expense), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
