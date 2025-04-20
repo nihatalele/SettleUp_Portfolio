@@ -1,24 +1,21 @@
-# README
+# cse3901-2025sp-giles-BANDProject6
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## How to Run
+1) Run "bundle install" in the terminal to install all the necessary gems in the Gemfile
+2) Run "rails db:migrate" in the terminal
+3) Run "rails s" in the terminal to start the application
+4) Follow the link provided as a result in the terminal
 
-Things you may want to cover:
+## How to use Application
 
-* Ruby version
+## File Structure
 
-* System dependencies
+## Team Members and Controller Contributions
 
-* Configuration
+Niha Talele: 
 
-* Database creation
+Aanya Tummalapalli: 
 
-* Database initialization
+Brandon Jiang: Contributed to creating the trips and participants controller and the destroy methods in trips_controller.rb, participants_controller.rb, and expenses_controller.rb.
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Hyunsuk Hwang: 
