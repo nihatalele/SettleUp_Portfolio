@@ -2,19 +2,38 @@
 
 <% content_for :title, "Trips" %>
 
-<h1>Trips</h1>
+<h1>Your Trips</h1>
 
-<span class="trips">
-  <% @trips.each do |trip| %>
-    <div>
-    <%= render trip %>
-    <p>
-      <%= link_to "View trip details", trip_path(trip), class: "btn btn-primary" %>
-    </p>
-    </div>
-    <br>
-  <% end %>
-</span>
+<% if @trips.any? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Dates</th>
+        <th>Currency</th>
+        <th>Owner</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @trips.each do |trip| %>
+        <tr>
+          <td><%= link_to trip.name, trip_path(trip) %></td>
+          <td>
+            <%= trip.start_date.strftime("%b %-d, %Y") %> –
+            <%= trip.end_date.strftime("%b %-d, %Y") %>
+          </td>
+          <td><%= trip.currency %></td>
+          <td><%= trip.user.email %></td>
+          <td>
+            <%= link_to "Details", trip_path(trip), class: "btn btn-sm btn-primary" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>You don’t have any trips yet.</p>
+<% end %>
 
-
-<%= link_to "New trip", new_trip_path, class: "btn btn-primary" %>
+<%= link_to "New Trip", new_trip_path, class: "btn btn-primary" %>

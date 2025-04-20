@@ -1,19 +1,23 @@
+# app/controllers/expenses_controller.rb
 class ExpensesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_trip
+  before_action only: %i[new create show edit update destroy] do
+    authorize_trip!(@trip)
+  end
   before_action :set_participant
   before_action :set_expense, only: %i[show edit update destroy]
-  before_action :authenticate_user!
 
+  # GET /trips/:trip_id/participants/:participant_id/expenses/new
   def new
     @expense = @participant.expenses.build
   end
 
+  # POST /trips/:trip_id/participants/:participant_id/expenses
   def create
-    @expense = @participant.expenses.build(expense_params)
-    @expense.trip = @trip
-
+    @expense            = @participant.expenses.build(expense_params)
+    @expense.trip       = @trip
     if @expense.save
-      # Call the calculate_shares method to distribute the expense among participants.
       @expense.calculate_shares
       redirect_to trip_participant_expenses_path(@trip, @participant), notice: "Expense added."
     else
@@ -21,13 +25,13 @@ class ExpensesController < ApplicationController
     end
   end
 
+  # GET /trips/:trip_id/participants/:participant_id/expenses/:id/edit
   def edit
-    @trip = @expense.trip
   end
 
+  # PATCH/PUT /trips/:trip_id/participants/:participant_id/expenses/:id
   def update
     if @expense.update(expense_params)
-      # Call the calculate_shares method to redistribute the expense among participants.
       @expense.calculate_shares
       redirect_to trip_participant_expenses_path(@trip, @participant), notice: "Expense updated."
     else
@@ -35,39 +39,35 @@ class ExpensesController < ApplicationController
     end
   end
 
+  # DELETE /trips/:trip_id/participants/:participant_id/expenses/:id
   def destroy
-    @expense.shared_participants.each do |shared_participant|
-      @expense.shared_participants.delete(shared_participant)
-    end
+    @expense.shared_participants.clear
     @expense.destroy
-    # redirect_to trip_participant_expense_path(@trip, @participant), notice: "Expense deleted."
-    redirect_to trip_participant_expenses_path(params[:trip_id], params[:participant_id]), notice: "Expense was successfully deleted."
+    redirect_to trip_participant_expenses_path(@trip, @participant), notice: "Expense was successfully deleted."
   end
 
   private
 
   def set_trip
-    @trip = Trip.find(params[:trip_id])
+    @trip = Trip.for_user(current_user).find(params[:trip_id])
   end
 
   def set_participant
-    @participant = Participant.find(params[:participant_id])
+    @participant = @trip.participants.find(params[:participant_id])
   end
 
   def set_expense
-    # Find the expense using the participant's expenses association
-    # This ensures that the expense belongs to the correct participant.
-    # This is important for security reasons, as we don't want to expose expenses
-    # that don't belong to the participant.
-
-    # @expense = Expense.find(params[:id])
-    # @expense = @trip.expenses.find(params[:id])
-    # @expense = @trip.expenses.find_by(id: params[:id], participant_id: @participant.id)
-    # @expense = @trip.expenses.find_by(id: params[:id], participant_id: @participant.id)
     @expense = @participant.expenses.find(params[:id])
   end
 
   def expense_params
-    params.require(:expense).permit(:description, :amount, :date, :currency, :category, :participant_id, shared_participant_ids: [])
+    params.require(:expense)
+          .permit(:description,
+                  :amount,
+                  :date,
+                  :currency,
+                  :category,
+                  :participant_id,
+                  shared_participant_ids: [])
   end
 end
