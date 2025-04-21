@@ -1,3 +1,9 @@
+<!-- 
+  This form allows a user to create or edit an expense for a participant in a specific trip.
+  It includes fields for description, amount, currency, date, category, and shared participants.
+  It also handles validation errors and ensures the participant ID is passed with the form.
+-->
+
 <%= form_with(model: [@trip, @participant, @expense]) do |form| %>
   <% if @expense.errors.any? %>
     <div style="color: red">

@@ -1,3 +1,8 @@
+<!-- 
+  This page displays the form to create a new expense for a specific participant in a trip.
+  It sets the page title, includes a back link, and renders the shared form partial.
+-->
+
 <% content_for :title, "New Expense for #{@participant.name}" %>
 <%= link_to "Back to Participant's Expenses", trip_participant_expenses_path(@trip, @participant), class: "btn btn-primary" %>
 

@@ -1,4 +1,10 @@
 
+<!-- 
+  This page displays the form to edit an existing expense for a participant in a trip.
+  It sets the page title, includes a back link to the expense details page, and renders the shared 
+form partial.
+-->
+
 <% content_for :title, "Edit Expense" %>
 <%= link_to "Back to Expense Details", trip_participant_expense_path(@trip, @participant, @expense), class: "btn btn-primary"%>
 
