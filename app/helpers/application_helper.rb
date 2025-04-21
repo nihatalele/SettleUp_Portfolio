@@ -39,4 +39,3 @@ module ApplicationHelper
     CURRENCY_EMOJIS[code] || ""
   end
 end
-

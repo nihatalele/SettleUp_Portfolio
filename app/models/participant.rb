@@ -67,4 +67,3 @@ class Participant < ApplicationRecord
     total_owed_to_other - total_owed_by_other
   end
 end
-
