@@ -1,3 +1,7 @@
+<!-- This view displays the details of a specific expense within a trip, including category, 
+amount, payer, and participants involved. It also shows how much each participant owes and provides 
+options to edit or delete the expense. -->
+
 
 <%= link_to "Back to Participant's Expenses", trip_participant_expenses_path(@trip, @participant), class: "btn btn-primary" %>
 <%= link_to "Edit Expense", edit_trip_participant_expense_path(@trip, @participant, @expense), class: "btn btn-secondary" %>
