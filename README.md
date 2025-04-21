@@ -16,7 +16,7 @@ This project uses...
 
 Niha Talele: 
 
-Aanya Tummalapalli: 
+Aanya Tummalapalli: Contributed to enhancing the controller logic for currency conversion, totals calculation, and dynamic data display in trips_controller.rb and expenses_controller.rb.
 
 Brandon Jiang: Contributed to creating the trips and participants controller and the destroy methods in trips_controller.rb, participants_controller.rb, and expenses_controller.rb.
 
