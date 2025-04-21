@@ -22,7 +22,7 @@ app/views/devise/: Devise-generated views for authentication
 
 ## Team Members and Controller Contributions
 
-Niha Talele: 
+Niha Talele: Contributed by scoping all trip, participant, and expense lookups through Trip.for_user(current_user) and added authorize_trip! before_actions in the Trips, Participants, and Expenses Controllers to enforce access by owner or invited email. Also updated the ParticipantsController to accept and validate an email field, enabling secure share‑by‑email functionality.
 
 Aanya Tummalapalli: Contributed to enhancing the controller logic for currency conversion, totals calculation, and dynamic data display in trips_controller.rb and expenses_controller.rb.
 
