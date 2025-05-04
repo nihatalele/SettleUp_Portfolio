@@ -1,0 +1,15 @@
+BAND
+Overall: (165/180)
+Repo: git@github.com:cse3901-2025sp-giles/BANDProject6.git
+Documentation: (15/20) What you have in your README is okay.  However, I would like a little content about how to use your application, not just how to run it.  In-code comments are good.
+Correctness: (30/35) It's a little odd that someone has to create an account to create a trip but participants just need an email address.  Navigation is a bit clunky, as sometimes
+it's tricky to find the right screen to perform a function (like add an expense).  My biggest complaint is that there is no way to see the total list of expenses for a trip.  If you go in through a user you can see the expenses that the person paid, but not the ones that they are on the hook for. 
+Functionality/Features: (23/25) I like that you give the option to view a participant's summary before removing them from the trip.  I really like the settle up table at the bottom
+What is the purpose of the checkboxes on the settle up table?  Is that supposed to allow us to zero them out?  It doesn't seem to work.
+Aesthetics: (17/20) Looks pretty good.  I don't love that so many things take the full width of the page.  Wide boxes with small amounts of information in them seem strange.
+Style - HTML/CSS/JS (15/15) Great
+Style - Ruby (15/15) Nice job
+Design - HTML/CSS/JS (15/15) Thank you for using variables in your stylesheet :)
+Design - Ruby/Rails (15/15) No complaints
+Presentation (20/20)
+Notes: Well done overall.  My only complaints are some less-than-intuitive workflows and the styling.
