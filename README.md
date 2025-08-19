@@ -1,31 +1,50 @@
-# cse3901-2025sp-giles-BANDProject6
+# Settle Up
 
-This project uses Ruby on Rails to create an application for organizing and handling the expenses for multi-day trip for a group of people.
+**Description:**  
+Settle Up is a Ruby on Rails (MVC) web application for managing and sharing expenses on multi-day trips. Users can create trips, add participants, and securely split costs. Developed as a **collaborative class project**, with a focus on authentication, access control, and participant management.
 
-## How to Run Application
+---
 
-1) Run "bundle install" in the terminal to install all the necessary gems in the Gemfile
-2) Run "rails db:migrate" in the terminal
-3) Run "rails server" in the terminal to start the application
-4) Follow the link provided as a result in the terminal
+## Key Features
+- User authentication and secure login
+- Create trips and manage participants
+- Add and share expenses among friends
+- Access control: users only see trips they own or are invited to
 
-## File Structure
+---
 
-Gemfile: Specifies the source and dependencies
-Gemfile.lock: Automatically generated from bundle install
-config/routes.rb: All app routes are defined here  
-app/controllers/: Contains all controllers
-app/views/: Contains views corresponding to each controller  
-app/models/: Contains model definitions and associations  
-db/migrate/: Contains all migration files used to modify the database schema  
-app/views/devise/: Devise-generated views for authentication
+## My Contributions
+- Scoped all trip, participant, and expense lookups using **ActiveRecord** (`Trip.for_user(current_user)`)
+- Added `authorize_trip!` before_actions to enforce access control
+- Updated participant functionality to accept and validate emails for secure expense sharing
 
-## Team Members and Controller Contributions
+---
 
-Niha Talele: Contributed by scoping all trip, participant, and expense lookups through Trip.for_user(current_user) and added authorize_trip! before_actions in the Trips, Participants, and Expenses Controllers to enforce access by owner or invited email. Also updated the ParticipantsController to accept and validate an email field, enabling secure share‑by‑email functionality.
+## Tech Stack
+Ruby on Rails, ActiveRecord, Devise (authentication), SQLite (development), HTML/CSS/ERB
 
-Aanya Tummalapalli: Contributed to enhancing the controller logic for currency conversion, totals calculation, and dynamic data display in trips_controller.rb and expenses_controller.rb.
+---
 
-Brandon Jiang: Contributed to creating the trips and participants controller and the destroy methods in trips_controller.rb, participants_controller.rb, and expenses_controller.rb.
+## How to Run (Safe Version)
+1. Clone the repo
+2. Run `bundle install` to install dependencies
+3. Run `rails db:migrate`
+4. Run `rails server` and open the link provided in your terminal
 
-Hyunsuk Hwang: Contributed creating the expenses function and the login/authentication function.
+---
+
+## Team
+Project developed collaboratively with three other students; I focused on security, access control, and participant management.
+
+---
+
+## Professor Feedback / Highlights
+- Recognized for **well-structured Ruby code** and effective use of ActiveRecord for database interactions
+- Appreciated **clear HTML/CSS styling**, including use of variables in stylesheets
+- Noted for thoughtful **UI/UX choices**, such as participant summaries and the settle-up table
+- Feedback helped improve **workflow intuitiveness** and design aesthetics
+
+---
+
+## Notes for Recruiters
+This version uses **dummy data** and removes any sensitive information from the original project while demonstrating core functionality and my contributions.
